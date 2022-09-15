@@ -1,0 +1,11 @@
+.iframebox {
+  position: relative;
+  width: 90%;
+  padding-bottom: 80%;
+}
+
+.iframebox iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}

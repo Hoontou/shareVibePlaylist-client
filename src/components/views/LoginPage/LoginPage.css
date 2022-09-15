@@ -1,0 +1,33 @@
+@keyframes showItem {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+.stagger-1 {
+  animation: showItem 0.5s;
+  animation-fill-mode: both;
+}
+
+.stagger-2 {
+  animation: showItem 0.5s;
+  animation-fill-mode: both;
+  animation-delay: 0.7s;
+}
+
+.stagger-3 {
+  animation: showItem 0.5s;
+  animation-fill-mode: both;
+  animation-delay: 1.5s;
+}
+
+.stagger-4 {
+  animation: showItem 0.5s;
+  animation-fill-mode: both;
+  animation-delay: 1.5s;
+}
