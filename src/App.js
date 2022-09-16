@@ -13,6 +13,7 @@ function App() {
     <Router>
       <Routes>
         <Route path='/' element={<LandingPage />} />
+        <Route path='*' element={<LandingPage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/postpli' element={<PostPli />} />
         <Route path='/plis/:_id' element={<PliPage />} />
