@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import LoginPage from './components/views/LoginPage/LoginPage';
 import LandingPage from './components/views/LandingPage/LandingPage';
-import GetUserInfo from './components/views/LoginPage/GetUserInfo';
 import PostPli from './components/views/PostPli/PostPli';
 import PliPage from './components/views/PliPage/PliPage';
 import Collections from './components/views/Collections/Collections';
@@ -15,7 +14,6 @@ function App() {
       <Routes>
         <Route path='/' element={<LandingPage />} />
         <Route path='/login' element={<LoginPage />} />
-        <Route path='/logining' element={<GetUserInfo />} />
         <Route path='/postpli' element={<PostPli />} />
         <Route path='/plis/:_id' element={<PliPage />} />
         <Route path='/collections' element={<Collections />} />

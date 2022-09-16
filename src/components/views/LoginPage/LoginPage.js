@@ -1,10 +1,47 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { naverLogin } from './naverLogin';
 import './LoginPage.css';
 import vibeImg from '../../../img/002.jpg';
+import axios from 'axios';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import { Typography } from 'antd';
+const { Title } = Typography;
 const LoginPage = () => {
   const navigate = useNavigate();
+  const [success, setSuccess] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [open, setOpen] = useState(false);
+  const [msg, setMsg] = useState(
+    '서버에 문제가 있어 로그인에 실패했어요. 나중에 다시 들러주세요 ㅜㅜ'
+  );
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const postUserData = (data) => {
+    axios.post('/api/users/register', { data }).then((res) => {
+      if (res.data.success) {
+        localStorage.setItem('userData', JSON.stringify(data));
+        localStorage.removeItem('com.naver.nid.oauth.state_token');
+        localStorage.removeItem('com.naver.nid.access_token');
+        navigate('/');
+      } else {
+        handleOpen();
+      }
+    });
+  };
 
   useEffect(() => {
     //로컬스토리지에 이미 유저정보가 있는데 로그인 페이지 접근하면  /  로 이동
@@ -12,6 +49,19 @@ const LoginPage = () => {
       navigate('/');
     } else {
       naverLogin.init();
+      naverLogin.getLoginStatus(function (status) {
+        if (status) {
+          setSuccess(true);
+          const userData = {
+            id: naverLogin.user.id,
+            nickname: naverLogin.user.nickname,
+            birthyear: naverLogin.user.birthyear,
+            profile_image: naverLogin.user.profile_image,
+            gender: naverLogin.user.gender,
+          };
+          postUserData(userData);
+        }
+      });
     }
   });
 
@@ -56,6 +106,18 @@ const LoginPage = () => {
           <p>using MERN stack</p>
         </p>
       </div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
+      >
+        <Box sx={style}>
+          <Typography id='modal-modal-description' sx={{ mt: 2 }}>
+            {msg}
+          </Typography>
+        </Box>
+      </Modal>
     </div>
   );
 };

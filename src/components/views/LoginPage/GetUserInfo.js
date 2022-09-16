@@ -8,17 +8,19 @@ const GetUserInfo = (props) => {
   const [spin, setSpin] = useState(true);
   const getUserData = async () => {
     const token = location.hash.split('=')[1].split('&')[0];
-    await axios
-      .post(
-        '/api/users/register',
+    console.log(token);
+    const userData = await axios
+      .get(
+        'https://openapi.naver.com/v1/nid/me',
         {
-          token,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
         { withCredentials: true }
       )
       .then((res) => {
-        localStorage.setItem('userData', JSON.stringify(res.data));
-        navigate('/myvibe');
+        console.log(res.data);
       });
   };
 

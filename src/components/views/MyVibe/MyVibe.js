@@ -45,6 +45,7 @@ const MyVibe = () => {
 
   const getMyPli = () => {
     axios.post('/api/users/getfavorite', { id: userId }).then((res) => {
+      console.log(res.data);
       if (res.data.success === 2) {
         setPlis([...res.data.likePli]);
       } else if (res.data.success === 1) {
