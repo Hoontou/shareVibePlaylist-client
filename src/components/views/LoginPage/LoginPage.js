@@ -27,19 +27,21 @@ const LoginPage = () => {
   };
 
   const postUserData = (data) => {
-    axios.post('/api/users/register', { data }).then((res) => {
-      if (res.data.success) {
-        localStorage.setItem('userData', JSON.stringify(data));
-        localStorage.removeItem('com.naver.nid.oauth.state_token');
-        localStorage.removeItem('com.naver.nid.access_token');
-        navigate('/');
-      } else {
-        setMsg(
-          '서버에 문제가 있어 로그인에 실패했어요. 나중에 다시 들러주세요 ㅜㅜ'
-        );
-        handleOpen();
-      }
-    });
+    axios
+      .post('https://share-vibe-pli.herokuapp.com/api/users/register', { data })
+      .then((res) => {
+        if (res.data.success) {
+          localStorage.setItem('userData', JSON.stringify(data));
+          localStorage.removeItem('com.naver.nid.oauth.state_token');
+          localStorage.removeItem('com.naver.nid.access_token');
+          navigate('/');
+        } else {
+          setMsg(
+            '서버에 문제가 있어 로그인에 실패했어요. 나중에 다시 들러주세요 ㅜㅜ'
+          );
+          handleOpen();
+        }
+      });
   };
 
   useEffect(() => {

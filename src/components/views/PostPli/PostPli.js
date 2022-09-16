@@ -38,7 +38,7 @@ function PostPli() {
     event.preventDefault();
     setSpin(true);
     axios
-      .post('/api/pli/postpli', {
+      .post('https://share-vibe-pli.herokuapp.com/api/pli/postpli', {
         url: Url,
       })
       .then((res) => {

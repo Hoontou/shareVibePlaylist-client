@@ -54,7 +54,7 @@ const LandingPage = () => {
   // 새로 불러 올 때마다 뒤에 넣어줌
   const fetchPlisLatest = () => {
     axios
-      .post('/api/pli/getPlis/latest', {
+      .post('https://share-vibe-pli.herokuapp.com/api/pli/getPlis/latest', {
         pageNum: page,
       })
       .then((res) => {
@@ -68,7 +68,7 @@ const LandingPage = () => {
   };
   const fetchPlisFavorite = () => {
     axios
-      .post('/api/pli/getPlis/favorite', {
+      .post('https://share-vibe-pli.herokuapp.com/api/pli/getPlis/favorite', {
         pageNum: page,
       })
       .then((res) => {
@@ -81,7 +81,7 @@ const LandingPage = () => {
   };
   const fetchPlisOldest = () => {
     axios
-      .post('/api/pli/getPlis/oldest', {
+      .post('https://share-vibe-pli.herokuapp.com/api/pli/getPlis/oldest', {
         pageNum: page,
       })
       .then((res) => {
