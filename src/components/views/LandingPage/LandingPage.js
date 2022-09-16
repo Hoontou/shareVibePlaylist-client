@@ -4,6 +4,7 @@ import { Card, Col, Typography, Row } from 'antd';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import NavBar from '../../common/NavBar/NavBar';
 import Button from '@mui/material/Button';
+import LoginPage from '../LoginPage/LoginPage';
 import './LandingPage.scss';
 const { Title } = Typography;
 const { Meta } = Card;
@@ -124,7 +125,9 @@ const LandingPage = () => {
     );
   });
 
-  return (
+  return !localStorage.getItem('userData') ? (
+    <LoginPage />
+  ) : (
     <div>
       <div style={{ width: '85%', margin: '1.5rem auto' }}>
         <Title level={3} style={{ display: 'inline-block' }}>
