@@ -52,32 +52,44 @@ const LandingPage = () => {
   // [...plis, ...res]이거는 기존 리스트 뒤에 계속해서 넣어준다는 뜻임.
   // 새로 불러 올 때마다 뒤에 넣어줌
   const fetchPlisLatest = () => {
-    axios.post('/api/pli/getPlis/latest', { pageNum: page }).then((res) => {
-      if (res.data.success) {
-        setPlis([...plis, ...res.data.plis]);
-        //다음엔 2페이지 불러와라는 뜻
-      } else {
-        alert('플리 가져오기 실패');
-      }
-    });
+    axios
+      .post('https://share-vibe-pli.herokuapp.com/api/pli/getPlis/latest', {
+        pageNum: page,
+      })
+      .then((res) => {
+        if (res.data.success) {
+          setPlis([...plis, ...res.data.plis]);
+          //다음엔 2페이지 불러와라는 뜻
+        } else {
+          alert('플리 가져오기 실패');
+        }
+      });
   };
   const fetchPlisFavorite = () => {
-    axios.post('/api/pli/getPlis/favorite', { pageNum: page }).then((res) => {
-      if (res.data.success) {
-        setPlis([...plis, ...res.data.plis]);
-      } else {
-        alert('플리 가져오기 실패');
-      }
-    });
+    axios
+      .post('https://share-vibe-pli.herokuapp.com/api/pli/getPlis/favorite', {
+        pageNum: page,
+      })
+      .then((res) => {
+        if (res.data.success) {
+          setPlis([...plis, ...res.data.plis]);
+        } else {
+          alert('플리 가져오기 실패');
+        }
+      });
   };
   const fetchPlisOldest = () => {
-    axios.post('/api/pli/getPlis/oldest', { pageNum: page }).then((res) => {
-      if (res.data.success) {
-        setPlis([...plis, ...res.data.plis]);
-      } else {
-        alert('플리 가져오기 실패');
-      }
-    });
+    axios
+      .post('https://share-vibe-pli.herokuapp.com/api/pli/getPlis/oldest', {
+        pageNum: page,
+      })
+      .then((res) => {
+        if (res.data.success) {
+          setPlis([...plis, ...res.data.plis]);
+        } else {
+          alert('플리 가져오기 실패');
+        }
+      });
   };
   useEffect(() => {
     //로컬스토리지에 유저정보 없으면 로그인페이지로 이동

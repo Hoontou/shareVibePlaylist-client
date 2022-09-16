@@ -31,16 +31,20 @@ const UserColl = () => {
   };
 
   const getPli = (id) => {
-    axios.post('/api/users/getfavorite', { _id: id._id }).then((res) => {
-      if (res.data.success === 2) {
-        setPlis([...res.data.likePli]);
-        setSpin(false);
-      } else if (res.data.success === 1) {
-        setMsg('서버에 오류가 생겨 정보를 가져오지 못했어요..');
-        setSpin(false);
-        handleOpen();
-      }
-    });
+    axios
+      .post('https://share-vibe-pli.herokuapp.com/api/users/getfavorite', {
+        _id: id._id,
+      })
+      .then((res) => {
+        if (res.data.success === 2) {
+          setPlis([...res.data.likePli]);
+          setSpin(false);
+        } else if (res.data.success === 1) {
+          setMsg('서버에 오류가 생겨 정보를 가져오지 못했어요..');
+          setSpin(false);
+          handleOpen();
+        }
+      });
   };
 
   useEffect(() => {

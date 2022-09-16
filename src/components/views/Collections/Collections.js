@@ -20,10 +20,12 @@ const Collections = () => {
   //   });
   // };
   const loadCollections = () => {
-    axios.get('/api/users/getcollections').then((res) => {
-      setColl([...res.data.collections]);
-      console.log(res.data);
-    });
+    axios
+      .get('https://share-vibe-pli.herokuapp.com/api/users/getcollections')
+      .then((res) => {
+        setColl([...res.data.collections]);
+        console.log(res.data);
+      });
   };
   useEffect(() => {
     loadCollections();

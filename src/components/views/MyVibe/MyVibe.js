@@ -44,20 +44,24 @@ const MyVibe = () => {
   };
 
   const getMyPli = () => {
-    axios.post('/api/users/getfavorite', { id: userId }).then((res) => {
-      console.log(res.data);
-      if (res.data.success === 2) {
-        setPlis([...res.data.likePli]);
-      } else if (res.data.success === 1) {
-        setMsg('서버에 오류가 생겨 정보를 가져오지 못했어요..');
-        handleOpen();
-      } else if (res.data.success === 0) {
-        setMsg(
-          '마음에 드는 플리에 좋아요를 눌러보세요. 보관함에서 모아볼 수 있어요.'
-        );
-        handleOpen();
-      }
-    });
+    axios
+      .post('https://share-vibe-pli.herokuapp.com/api/users/getfavorite', {
+        id: userId,
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.success === 2) {
+          setPlis([...res.data.likePli]);
+        } else if (res.data.success === 1) {
+          setMsg('서버에 오류가 생겨 정보를 가져오지 못했어요..');
+          handleOpen();
+        } else if (res.data.success === 0) {
+          setMsg(
+            '마음에 드는 플리에 좋아요를 눌러보세요. 보관함에서 모아볼 수 있어요.'
+          );
+          handleOpen();
+        }
+      });
   };
 
   useEffect(() => {

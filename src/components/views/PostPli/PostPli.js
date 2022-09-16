@@ -37,27 +37,31 @@ function PostPli() {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     setSpin(true);
-    axios.post('/api/pli/postpli', { url: Url }).then((res) => {
-      if (res.data.success === 0) {
-        setSpin(false);
-        navigate(`/plis/${res.data.pliData._id}`);
-      } else if (res.data.success === 1) {
-        setSpin(false);
-        navigate(`/plis/${res.data.item._id}`);
-      } else if (res.data.success === 2) {
-        setSpin(false);
-        setMessege(
-          '현재 서버에 문제가 있어요 ㅜㅜ 나중에 다시 시도해 주세요..'
-        );
-        handleOpen();
-      } else if (res.data.success === 3) {
-        setSpin(false);
-        setMessege(
-          '입력한 주소에서 데이터를 가져올 수 없어요. 바이브의 주소가 아니거나 지금 서버에 문제가 있어요.'
-        );
-        handleOpen();
-      }
-    });
+    axios
+      .post('https://share-vibe-pli.herokuapp.com/api/pli/postpli', {
+        url: Url,
+      })
+      .then((res) => {
+        if (res.data.success === 0) {
+          setSpin(false);
+          navigate(`/plis/${res.data.pliData._id}`);
+        } else if (res.data.success === 1) {
+          setSpin(false);
+          navigate(`/plis/${res.data.item._id}`);
+        } else if (res.data.success === 2) {
+          setSpin(false);
+          setMessege(
+            '현재 서버에 문제가 있어요 ㅜㅜ 나중에 다시 시도해 주세요..'
+          );
+          handleOpen();
+        } else if (res.data.success === 3) {
+          setSpin(false);
+          setMessege(
+            '입력한 주소에서 데이터를 가져올 수 없어요. 바이브의 주소가 아니거나 지금 서버에 문제가 있어요.'
+          );
+          handleOpen();
+        }
+      });
   };
 
   return !localStorage.getItem('userData') ? (
