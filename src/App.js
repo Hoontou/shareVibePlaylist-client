@@ -13,7 +13,6 @@ function App() {
     <Router>
       <Routes>
         <Route path='/' element={<LandingPage />} />
-        <Route element={<LandingPage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/postpli' element={<PostPli />} />
         <Route path='/plis/:_id' element={<PliPage />} />
@@ -21,6 +20,7 @@ function App() {
         <Route path='/searchpli' element={<SearchPli />} />
         <Route path='/myvibe' element={<MyVibe />} />
         <Route path='/users/:_id/:nickname' element={<UserColl />} />
+        <Route path='/*' element={<LandingPage />} />
       </Routes>
     </Router>
   );
