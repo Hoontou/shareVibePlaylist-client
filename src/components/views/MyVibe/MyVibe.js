@@ -45,7 +45,7 @@ const MyVibe = () => {
 
   const getMyPli = () => {
     axios
-      .post('https://share-vibe-pli.herokuapp.com/api/users/getfavorite', {
+      .post('/api/users/getfavorite', {
         id: userId,
       })
       .then((res) => {

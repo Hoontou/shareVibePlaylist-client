@@ -16,11 +16,9 @@ const PliPage = (props) => {
     let body = {
       _id: _id._id,
     };
-    axios
-      .post('https://share-vibe-pli.herokuapp.com/api/pli/getpli', body)
-      .then((res) => {
-        setUrl(res.data.pli.url);
-      });
+    axios.post('/api/pli/getpli', body).then((res) => {
+      setUrl(res.data.pli.url);
+    });
   };
   useEffect(() => {
     getPli(_id);

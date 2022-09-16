@@ -32,7 +32,7 @@ const UserColl = () => {
 
   const getPli = (id) => {
     axios
-      .post('https://share-vibe-pli.herokuapp.com/api/users/getfavorite', {
+      .post('/api/users/getfavorite', {
         _id: id._id,
       })
       .then((res) => {

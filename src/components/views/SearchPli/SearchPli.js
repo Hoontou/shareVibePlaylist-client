@@ -17,18 +17,16 @@ const SearchPli = () => {
 
   const fetchPliSearch = () => {
     if (localStorage.getItem('userData')) {
-      axios
-        .get('https://share-vibe-pli.herokuapp.com/api/pli/getplis/searchpli')
-        .then((res) => {
-          if (res.data.success) {
-            setPlis([...res.data.plis]);
-            setTimeout(() => {
-              setSpin(false);
-            }, 300);
-          } else {
-            alert('플리 가져오기 실패');
-          }
-        });
+      axios.get('/api/pli/getplis/searchpli').then((res) => {
+        if (res.data.success) {
+          setPlis([...res.data.plis]);
+          setTimeout(() => {
+            setSpin(false);
+          }, 300);
+        } else {
+          alert('플리 가져오기 실패');
+        }
+      });
     }
   };
   const search = (word) => {
