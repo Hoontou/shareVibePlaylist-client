@@ -68,7 +68,9 @@ const UserColl = () => {
       </Col>
     );
   });
-  return (
+  return !localStorage.getItem('userData') ? (
+    <LoginPage />
+  ) : (
     <div>
       <div style={{ width: '85%', margin: '1.5rem auto' }}>
         <div>

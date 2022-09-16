@@ -5,7 +5,6 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import NavBar from '../../common/NavBar/NavBar';
 import Button from '@mui/material/Button';
 import './LandingPage.scss';
-import LoginPage from '../LoginPage/LoginPage';
 const { Title } = Typography;
 const { Meta } = Card;
 const LandingPage = () => {

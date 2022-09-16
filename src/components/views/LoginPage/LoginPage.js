@@ -7,16 +7,12 @@ import axios from 'axios';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { Typography } from 'antd';
-const { Title } = Typography;
 const LoginPage = () => {
   const navigate = useNavigate();
-  const [success, setSuccess] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [open, setOpen] = useState(false);
-  const [msg, setMsg] = useState(
-    '서버에 문제가 있어 로그인에 실패했어요. 나중에 다시 들러주세요 ㅜㅜ'
-  );
+  const [msg, setMsg] = useState('');
 
   const style = {
     position: 'absolute',
@@ -38,6 +34,9 @@ const LoginPage = () => {
         localStorage.removeItem('com.naver.nid.access_token');
         navigate('/');
       } else {
+        setMsg(
+          '서버에 문제가 있어 로그인에 실패했어요. 나중에 다시 들러주세요 ㅜㅜ'
+        );
         handleOpen();
       }
     });
@@ -51,7 +50,6 @@ const LoginPage = () => {
       naverLogin.init();
       naverLogin.getLoginStatus(function (status) {
         if (status) {
-          setSuccess(true);
           const userData = {
             id: naverLogin.user.id,
             nickname: naverLogin.user.nickname,

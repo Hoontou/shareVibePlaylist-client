@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../../common/NavBar/NavBar';
 import example from '../../../img/001.png';
@@ -60,7 +60,9 @@ function PostPli() {
     });
   };
 
-  return (
+  return !localStorage.getItem('userData') ? (
+    <LoginPage />
+  ) : (
     <div className='container text-center'>
       {spin && (
         <svg className='spinner' viewBox='0 0 50 50'>

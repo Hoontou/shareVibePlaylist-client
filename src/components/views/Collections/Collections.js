@@ -45,7 +45,9 @@ const Collections = () => {
     );
   });
 
-  return (
+  return localStorage.getItem('userData') ? (
+    <LoginPage />
+  ) : (
     <div>
       <div style={{ width: '85%', margin: '3rem auto' }}>
         <Title level={3} style={{ display: 'inline-block' }}>

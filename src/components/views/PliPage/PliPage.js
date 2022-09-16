@@ -5,21 +5,10 @@ import Favorite from './Favorite';
 import NavBar from '../../common/NavBar/NavBar';
 import LoginPage from '../LoginPage/LoginPage';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import EastIcon from '@mui/icons-material/East';
 const PliPage = (props) => {
   let _id = useParams();
-
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
 
   const [Url, setUrl] = useState('');
 
@@ -34,7 +23,9 @@ const PliPage = (props) => {
   useEffect(() => {
     getPli(_id);
   });
-  return (
+  return !localStorage.getItem('userData') ? (
+    <LoginPage />
+  ) : (
     <div style={{ width: '100%', margin: '0' }}>
       <div
         style={{

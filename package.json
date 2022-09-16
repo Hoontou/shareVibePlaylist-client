@@ -38,7 +38,6 @@
       "react-app/jest"
     ]
   },
-  "proxy": "https://share-vibe-pli.herokuapp.com",
   "browserslist": {
     "production": [
       ">0.2%",

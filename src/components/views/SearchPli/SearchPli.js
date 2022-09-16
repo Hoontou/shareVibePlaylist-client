@@ -75,7 +75,9 @@ const SearchPli = () => {
     );
   });
 
-  return (
+  return !localStorage.getItem('userData') ? (
+    <LoginPage />
+  ) : (
     <div>
       <div style={{ width: '85%', margin: '1.5rem auto' }}>
         <InputGroup className='mb-3'>
