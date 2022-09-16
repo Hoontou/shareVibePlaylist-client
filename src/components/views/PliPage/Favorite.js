@@ -18,52 +18,38 @@ const Favorite = (props) => {
   const [Favorited, setFavorited] = useState(false);
 
   useEffect(() => {
-    axios
-      .post('https://share-vibe-pli.herokuapp.com/api/favorite/favorited', body)
-      .then((res) => {
-        if (res.data.success) {
-          setFavorited(res.data.favorited);
-        } else {
-          alert('정보를 가져오는데 실패 했습니다.');
-        }
-      });
+    axios.post('/api/favorite/favorited', body).then((res) => {
+      if (res.data.success) {
+        setFavorited(res.data.favorited);
+      } else {
+        alert('정보를 가져오는데 실패 했습니다.');
+      }
+    });
 
-    axios
-      .post('https://share-vibe-pli.herokuapp.com/api/pli/getpli', body)
-      .then((res) => {
-        setFavoriteNumber(res.data.pli.likes);
-      });
+    axios.post('/api/pli/getpli', body).then((res) => {
+      setFavoriteNumber(res.data.pli.likes);
+    });
   }, []);
 
   const onClickFavorite = () => {
     if (Favorited) {
-      axios
-        .post(
-          'https://share-vibe-pli.herokuapp.com/api/favorite/removeFromFavorite',
-          body
-        )
-        .then((res) => {
-          if (res.data.success) {
-            setFavoriteNumber(FavoriteNumber - 1);
-            setFavorited(!Favorited);
-          } else {
-            alert('Favorite 리스트에서 지우는 걸 실패했습니다.');
-          }
-        });
+      axios.post('/api/favorite/removeFromFavorite', body).then((res) => {
+        if (res.data.success) {
+          setFavoriteNumber(FavoriteNumber - 1);
+          setFavorited(!Favorited);
+        } else {
+          alert('Favorite 리스트에서 지우는 걸 실패했습니다.');
+        }
+      });
     } else {
-      axios
-        .post(
-          'https://share-vibe-pli.herokuapp.com/api/favorite/addToFavorite',
-          body
-        )
-        .then((res) => {
-          if (res.data.success) {
-            setFavoriteNumber(FavoriteNumber + 1);
-            setFavorited(!Favorited);
-          } else {
-            alert('Favorite 리스트에서 추가하는 걸 실패했습니다.');
-          }
-        });
+      axios.post('/api/favorite/addToFavorite', body).then((res) => {
+        if (res.data.success) {
+          setFavoriteNumber(FavoriteNumber + 1);
+          setFavorited(!Favorited);
+        } else {
+          alert('Favorite 리스트에서 추가하는 걸 실패했습니다.');
+        }
+      });
     }
   };
 
