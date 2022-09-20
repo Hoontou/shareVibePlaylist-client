@@ -45,7 +45,7 @@ const Collections = () => {
     );
   });
 
-  return localStorage.getItem('userData') ? (
+  return !localStorage.getItem('userData') ? (
     <LoginPage />
   ) : (
     <div>
