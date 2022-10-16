@@ -6,13 +6,13 @@ import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import axios from 'axios';
 import LoginPage from '../LoginPage/LoginPage';
-import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import Grid from '@mui/material/Grid';
 const { Title } = Typography;
 const { Meta } = Card;
 const MyVibe = () => {
   const navigate = useNavigate();
-  const userId = JSON.parse(localStorage.getItem('userData')).id || 'id';
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [open, setOpen] = useState(false);
@@ -29,18 +29,55 @@ const MyVibe = () => {
     boxShadow: 24,
     p: 4,
   };
+  const comment = !localStorage.getItem('userData')
+    ? null
+    : JSON.parse(localStorage.getItem('userData')).comment || '너 납치된거야';
+  const gender = !localStorage.getItem('userData')
+    ? null
+    : JSON.parse(localStorage.getItem('userData')).gender || 'gen';
+  let gen = '';
+  if (gender == 'N') {
+    gen = '??';
+  }
+  if (gender == 'M') {
+    gen = '남';
+  }
+  if (gender == 'F') {
+    gen = '여';
+  }
+  const birth = !localStorage.getItem('userData')
+    ? null
+    : JSON.parse(localStorage.getItem('userData')).birthyear || 'birth';
+  const old = 2023 - parseInt(birth);
+  const userId = !localStorage.getItem('userData')
+    ? null
+    : JSON.parse(localStorage.getItem('userData')).id || 'id';
+  const Nick = !localStorage.getItem('userData')
+    ? null
+    : JSON.parse(localStorage.getItem('userData')).nickname;
+  const profileImg = !localStorage.getItem('userData')
+    ? null
+    : JSON.parse(localStorage.getItem('userData')).profile_image;
 
-  const Nick = JSON.parse(localStorage.getItem('userData')).nickname;
-  const profileImg = JSON.parse(localStorage.getItem('userData')).profile_image;
-
-  const edit = () => {
-    setMsg('닉네임과 사진은 네이버에서 변경 후 다시 로그인 해주세요.');
-    handleOpen();
+  const checkAuth = (callbackFunc) => {
+    axios.post('/api/users/auth', { id: userId }).then((res) => {
+      if (res.data.auth == 0) {
+        logout();
+      }
+      if (res.data.auth == 1) {
+        callbackFunc();
+      }
+    });
   };
-
   const logout = () => {
     localStorage.clear();
     navigate('/login');
+  };
+
+  const edit = () => {
+    navigate('/changeinfo');
+    // setMsg('닉네임과 사진은 네이버에서 변경 후 다시 로그인 해주세요.');
+    // handleOpen();
   };
 
   const getMyPli = () => {
@@ -49,7 +86,6 @@ const MyVibe = () => {
         id: userId,
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data.success === 2) {
           setPlis([...res.data.likePli]);
         } else if (res.data.success === 1) {
@@ -65,7 +101,7 @@ const MyVibe = () => {
   };
 
   useEffect(() => {
-    getMyPli();
+    checkAuth(getMyPli);
   }, []);
 
   const renderCards = plis.map((pli, index) => {
@@ -94,36 +130,42 @@ const MyVibe = () => {
     <LoginPage />
   ) : (
     <div>
-      <div style={{ width: '85%', margin: '1.5rem auto' }}>
+      <div
+        style={{ width: '85%', margin: '1.5rem auto', paddingBottom: '3.5rem' }}
+      >
         <div>
-          <div
-            style={{
-              width: '120px',
-              height: '120px',
-              borderRadius: '70%',
-              overflow: 'hidden',
-              marginBottom: '0.2rem',
-              marginLeft: '-0.2rem',
-            }}
-          >
-            <img
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              src={profileImg}
-              alt='profile'
-            />
-          </div>
+          <Grid container spacing={4}>
+            <Grid item xs={5}>
+              <div
+                style={{
+                  width: '140px',
+                  height: '140px',
+                  borderRadius: '70%',
+                  overflow: 'hidden',
+                  marginBottom: '0.2rem',
+                  marginLeft: '-0.2rem',
+                }}
+              >
+                <img
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  src={profileImg}
+                  alt='profile'
+                />
+              </div>
+            </Grid>
+            <Grid item xs={7}>
+              <div>
+                <p style={{ fontSize: '1.2rem' }}>"{comment}"</p>{' '}
+                <p>
+                  {old}세, {gen}
+                </p>
+              </div>
+            </Grid>
+          </Grid>
           <div>
             <Title level={3} style={{ display: 'inline-block' }}>
               {Nick}님의 저장소
-              <EditIcon fontSize='small' onClick={edit} />
-              <Button
-                style={{ marginLeft: '0.5rem', float: 'right' }}
-                onClick={logout}
-                size='small'
-                variant='outlined'
-              >
-                로그아웃
-              </Button>
+              <EditIcon fontSize='mideum' onClick={edit} />
             </Title>
             <hr style={{ marginTop: '-0.5rem' }} />
           </div>

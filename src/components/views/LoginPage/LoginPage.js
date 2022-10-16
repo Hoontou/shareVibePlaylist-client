@@ -28,8 +28,13 @@ const LoginPage = () => {
 
   const postUserData = (data) => {
     axios.post('/api/users/register', { data }).then((res) => {
-      if (res.data.success) {
-        localStorage.setItem('userData', JSON.stringify(data));
+      if (res.data.success == 1) {
+        localStorage.setItem('userData', JSON.stringify(res.data.userData));
+        localStorage.removeItem('com.naver.nid.oauth.state_token');
+        localStorage.removeItem('com.naver.nid.access_token');
+        navigate('/changeinfo');
+      } else if (res.data.success == 2) {
+        localStorage.setItem('userData', JSON.stringify(res.data.userData));
         localStorage.removeItem('com.naver.nid.oauth.state_token');
         localStorage.removeItem('com.naver.nid.access_token');
         navigate('/');

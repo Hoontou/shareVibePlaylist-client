@@ -32,10 +32,9 @@ const SearchPli = () => {
   const search = (word) => {
     let result = [];
     plis.map((pli, index) => {
-      if (pli.title.includes(word)) {
+      if (pli.title.toUpperCase().includes(word.toUpperCase())) {
         result.push(pli);
-      }
-      if (pli.subTitle.includes(word)) {
+      } else if (pli.subTitle.toUpperCase().includes(word.toUpperCase())) {
         result.push(pli);
       }
     });
@@ -52,6 +51,8 @@ const SearchPli = () => {
     if (value.length >= 2) {
       // 두글자 이상일 때 검색실행
       search(value); // 글자 바뀔때 마다 검색함
+    } else {
+      setAdd([]);
     }
   }, [value]);
 
@@ -81,7 +82,9 @@ const SearchPli = () => {
     <LoginPage />
   ) : (
     <div>
-      <div style={{ width: '85%', margin: '1.5rem auto' }}>
+      <div
+        style={{ width: '85%', margin: '1.5rem auto', paddingBottom: '3rem' }}
+      >
         <InputGroup className='mb-3'>
           <Form.Control
             placeholder='적적해서 서로의 전화기를 꺼내'
@@ -90,11 +93,27 @@ const SearchPli = () => {
           />
         </InputGroup>
         <hr />
+
+        <Row gutter={16}>{renderCards}</Row>
+        {!(value.length >= 2) && (
+          <div
+            className='text-center'
+            style={{
+              justifyContent: 'center',
+            }}
+          >
+            <p>오늘은 가지마</p>
+            <p>오늘만 가지마</p>
+            <p>오늘만 더 옆에 있어주면</p>
+            <p>나 잊을 수 있어</p>
+          </div>
+        )}
       </div>
+      <NavBar value={1} />
       {spin && (
-        <svg class='spinner' viewBox='0 0 50 50'>
+        <svg className='spinner' viewBox='0 0 50 50'>
           <circle
-            class='path'
+            className='path'
             cx='25'
             cy='25'
             r='20'
@@ -103,25 +122,6 @@ const SearchPli = () => {
           ></circle>
         </svg>
       )}
-
-      <div style={{ width: '85%', margin: '1.5rem auto' }}>
-        <Row gutter={16}>{renderCards}</Row>
-      </div>
-      {!(value.length >= 2) && (
-        <div
-          className='text-center'
-          style={{
-            justifyContent: 'center',
-          }}
-        >
-          <p>오늘은 가지마</p>
-          <p>오늘만 가지마</p>
-          <p>오늘만 더 옆에 있어주면</p>
-          <p>나 잊을 수 있어</p>
-        </div>
-      )}
-
-      <NavBar value={1} />
     </div>
   );
 };

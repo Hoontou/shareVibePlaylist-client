@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../../common/NavBar/NavBar';
 import example from '../../../img/001.png';
@@ -17,6 +17,9 @@ function PostPli() {
   const [messege, setMessege] = useState('');
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const userId = !localStorage.getItem('userData')
+    ? null
+    : JSON.parse(localStorage.getItem('userData')).id;
 
   const style = {
     position: 'absolute',
@@ -28,6 +31,17 @@ function PostPli() {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+  };
+  const checkAuth = () => {
+    axios.post('/api/users/auth', { id: userId }).then((res) => {
+      if (res.data.auth == 0) {
+        logout();
+      }
+    });
+  };
+  const logout = () => {
+    localStorage.clear();
+    navigate('/login');
   };
 
   const onUrlHandler = (event) => {
@@ -67,6 +81,13 @@ function PostPli() {
         }
       });
   };
+  useEffect(() => {
+    checkAuth();
+    if (userId !== 'KZMTB7q2ldVJqtcmEx_6EhAq39EzQnTeJMYhNQFfksc') {
+      alert('지금은 서버관리 때문에 관리자만 접근할 수 있어요 ㅜㅜ');
+      navigate('/');
+    }
+  });
 
   return !localStorage.getItem('userData') ? (
     <LoginPage />

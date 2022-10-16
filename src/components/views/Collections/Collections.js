@@ -4,12 +4,16 @@ import axios from 'axios';
 import { Card, Col, Typography, Row } from 'antd';
 import img from '../../../img/002.jpg';
 import LoginPage from '../LoginPage/LoginPage';
+import { useNavigate } from 'react-router-dom';
 const { Title } = Typography;
 const { Meta } = Card;
 
 const Collections = () => {
+  const navigate = useNavigate();
   const [coll, setColl] = useState([]);
-
+  const userId = !localStorage.getItem('userData')
+    ? null
+    : JSON.parse(localStorage.getItem('userData')).id;
   // const loadMoreItems = () => {
   //   axios.post('/api/pli/getPlis/search', {}).then((res) => {
   //     if (res.data.success) {
@@ -19,14 +23,28 @@ const Collections = () => {
   //     }
   //   });
   // };
+  const checkAuth = (callbackFunc) => {
+    axios.post('/api/users/auth', { id: userId }).then((res) => {
+      if (res.data.auth == 0) {
+        logout();
+      }
+      if (res.data.auth == 1) {
+        callbackFunc();
+      }
+    });
+  };
+  const logout = () => {
+    localStorage.clear();
+    navigate('/login');
+  };
+
   const loadCollections = () => {
     axios.get('/api/users/getcollections').then((res) => {
       setColl([...res.data.collections]);
-      console.log(res.data);
     });
   };
   useEffect(() => {
-    loadCollections();
+    checkAuth(loadCollections);
   }, []);
 
   const renderCards = coll.map((value, index) => {

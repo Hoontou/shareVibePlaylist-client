@@ -8,11 +8,14 @@ import Collections from './components/views/Collections/Collections';
 import SearchPli from './components/views/SearchPli/SearchPli';
 import MyVibe from './components/views/MyVibe/MyVibe';
 import UserColl from './components/views/UsersColl/UserColl';
+import ChangeInfo from './components/views/ChangeInfo/ChangeInfo';
+
 function App() {
   return (
     <Router>
       <Routes>
         <Route path='/' element={<LandingPage />} />
+        <Route path='/*' element={<LandingPage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/postpli' element={<PostPli />} />
         <Route path='/plis/:_id' element={<PliPage />} />
@@ -20,7 +23,7 @@ function App() {
         <Route path='/searchpli' element={<SearchPli />} />
         <Route path='/myvibe' element={<MyVibe />} />
         <Route path='/users/:_id/:nickname' element={<UserColl />} />
-        <Route path='/*' element={<LandingPage />} />
+        <Route path='/changeinfo' element={<ChangeInfo />} />
       </Routes>
     </Router>
   );

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Favorite from './Favorite';
 import NavBar from '../../common/NavBar/NavBar';
 import LoginPage from '../LoginPage/LoginPage';
@@ -8,10 +8,28 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import EastIcon from '@mui/icons-material/East';
 const PliPage = (props) => {
+  const navigate = useNavigate();
   let _id = useParams();
 
   const [Url, setUrl] = useState('');
+  const userId = !localStorage.getItem('userData')
+    ? null
+    : JSON.parse(localStorage.getItem('userData')).id;
 
+  const checkAuth = (callbackFunc, id) => {
+    axios.post('/api/users/auth', { id: userId }).then((res) => {
+      if (res.data.auth == 0) {
+        logout();
+      }
+      if (res.data.auth == 1) {
+        callbackFunc(id);
+      }
+    });
+  };
+  const logout = () => {
+    localStorage.clear();
+    navigate('/login');
+  };
   const getPli = (_id) => {
     let body = {
       _id: _id._id,
@@ -20,8 +38,9 @@ const PliPage = (props) => {
       setUrl(res.data.pli.url);
     });
   };
+
   useEffect(() => {
-    getPli(_id);
+    checkAuth(getPli, _id);
   });
   return !localStorage.getItem('userData') ? (
     <LoginPage />
@@ -55,9 +74,7 @@ const PliPage = (props) => {
           >
             <div className='text-center'>
               <a style={{ color: 'black' }} href={Url} target='_blank'>
-                바이브에서
-                <br />
-                저장하러 가기
+                바이브 웹으로
               </a>
             </div>
           </Button>

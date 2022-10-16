@@ -6,13 +6,18 @@ import NavBar from '../../common/NavBar/NavBar';
 import Button from '@mui/material/Button';
 import LoginPage from '../LoginPage/LoginPage';
 import './LandingPage.scss';
+import { useNavigate } from 'react-router-dom';
 const { Title } = Typography;
 const { Meta } = Card;
 const LandingPage = () => {
+  const navigate = useNavigate();
   const [plis, setPlis] = useState([]);
   const [Align, setAlign] = useState('Latest Updated');
   const [page, setPage] = useState(1);
   const [spin, setSpin] = useState(false);
+  const userId = !localStorage.getItem('userData')
+    ? null
+    : JSON.parse(localStorage.getItem('userData')).id;
 
   //정렬옵션이 바뀌면 플리 스테이트랑 페이지 스테이트를 기본으로 바꿔줌.
   //그리고 정렬옵션이 바꼈으므로 useEffect가 실행해서 정렬옵션에 맞춰서 1페이지 불러옴
@@ -48,6 +53,21 @@ const LandingPage = () => {
       fetchPlisFavorite();
       setPage(page + 1);
     }
+  };
+  const checkAuth = (callbackFunc) => {
+    axios.post('/api/users/auth', { id: userId }).then((res) => {
+      if (res.data.auth == 0) {
+        logout();
+      }
+      if (res.data.auth == 1) {
+        callbackFunc();
+        spining();
+      }
+    });
+  };
+  const logout = () => {
+    localStorage.clear();
+    navigate('/login');
   };
 
   // [...plis, ...res]이거는 기존 리스트 뒤에 계속해서 넣어준다는 뜻임.
@@ -93,9 +113,8 @@ const LandingPage = () => {
       });
   };
   useEffect(() => {
+    checkAuth(loadMoreItems);
     //로컬스토리지에 유저정보 없으면 로그인페이지로 이동
-    loadMoreItems();
-    spining();
 
     //정렬 옵션이 바뀔 때 마다 실행
   }, [Align]); // Align이랑 value가 바뀔 때 마다 loaditems 실행, 검색어가 바뀔때 마다 새로고침해줌
@@ -118,7 +137,7 @@ const LandingPage = () => {
         <div style={{ paddingTop: '0.3rem', paddingBottom: '1rem' }}>
           <Meta title={pli.title} />
           <span>
-            {pli.subTitle}, Likes:{pli.likes}{' '}
+            {pli.subTitle}, Likes:{pli.likes}
           </span>
         </div>
       </Col>
@@ -167,7 +186,7 @@ const LandingPage = () => {
             cy='25'
             r='20'
             fill='none'
-            stroke-width='5'
+            strokeWidth='5'
           ></circle>
         </svg>
       )}

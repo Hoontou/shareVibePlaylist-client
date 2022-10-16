@@ -5,11 +5,13 @@ import axios from 'axios';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import LoginPage from '../LoginPage/LoginPage';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import Grid from '@mui/material/Grid';
 const { Title } = Typography;
 const { Meta } = Card;
 
 const UserColl = () => {
+  const navigate = useNavigate();
   let urlParams = useParams();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -17,6 +19,13 @@ const UserColl = () => {
   const [plis, setPlis] = useState([]);
   const [spin, setSpin] = useState(true);
   const [msg, setMsg] = useState('');
+  const [profileImg, setProf] = useState('');
+  const [gender, setGender] = useState('');
+  const [birthyear, setBirthyear] = useState(0);
+  const [comment, setComment] = useState('');
+  const userId = !localStorage.getItem('userData')
+    ? null
+    : JSON.parse(localStorage.getItem('userData')).id;
 
   const style = {
     position: 'absolute',
@@ -28,6 +37,51 @@ const UserColl = () => {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+  };
+
+  const checkAuth = (callbackFunc1, callbackFunc2, param) => {
+    axios.post('/api/users/auth', { id: userId }).then((res) => {
+      if (res.data.auth == 0) {
+        logout();
+      }
+      if (res.data.auth == 1) {
+        callbackFunc1(param);
+        callbackFunc2(param);
+      }
+    });
+  };
+  const logout = () => {
+    localStorage.clear();
+    navigate('/login');
+  };
+
+  const getUserInfo = (id) => {
+    axios.post('/api/users/getuserinfo', { _id: id._id }).then((res) => {
+      if (res.data.success) {
+        console.log(res.data.userData);
+        const old = 2023 - parseInt(res.data.userData.birthyear);
+        let gen = '';
+        if (res.data.userData.gender == 'N') {
+          gen = '??';
+        }
+        if (res.data.userData.gender == 'M') {
+          gen = '남';
+        }
+        if (res.data.userData.gender == 'F') {
+          gen = '여';
+        }
+        setBirthyear(old);
+        setProf(res.data.userData.profile_image);
+        setGender(gen);
+        if (res.data.userData.comment == '') {
+          setComment('너 납치된거야');
+        } else {
+          setComment(res.data.userData.comment);
+        }
+      } else if (!res.data.success) {
+        navigate('/collections');
+      }
+    });
   };
 
   const getPli = (id) => {
@@ -48,7 +102,7 @@ const UserColl = () => {
   };
 
   useEffect(() => {
-    getPli(urlParams);
+    checkAuth(getPli, getUserInfo, urlParams);
   }, []);
 
   const renderCards = plis.map((pli, index) => {
@@ -72,11 +126,44 @@ const UserColl = () => {
       </Col>
     );
   });
+
   return !localStorage.getItem('userData') ? (
     <LoginPage />
   ) : (
     <div>
-      <div style={{ width: '85%', margin: '1.5rem auto' }}>
+      <div
+        style={{ width: '85%', margin: '1.5rem auto', paddingBottom: '3.5rem' }}
+      >
+        <div>
+          <Grid container spacing={4}>
+            <Grid item xs={5}>
+              <div
+                style={{
+                  width: '140px',
+                  height: '140px',
+                  borderRadius: '70%',
+                  overflow: 'hidden',
+                  marginBottom: '0.2rem',
+                  marginLeft: '-0.2rem',
+                }}
+              >
+                <img
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  src={profileImg}
+                  alt='profile'
+                />
+              </div>
+            </Grid>
+            <Grid item xs={7}>
+              <div>
+                <p style={{ fontSize: '1.2rem' }}>"{comment}"</p>{' '}
+                <p>
+                  {birthyear}세, {gender}
+                </p>
+              </div>
+            </Grid>
+          </Grid>
+        </div>
         <div>
           <Title level={3} style={{ display: 'inline-block' }}>
             {`${urlParams.nickname}의 컬렉션`}
@@ -88,14 +175,14 @@ const UserColl = () => {
         </div>
       </div>
       {spin && (
-        <svg class='spinner' viewBox='0 0 50 50'>
+        <svg className='spinner' viewBox='0 0 50 50'>
           <circle
-            class='path'
+            className='path'
             cx='25'
             cy='25'
             r='20'
             fill='none'
-            stroke-width='5'
+            strokeWidth='5'
           ></circle>
         </svg>
       )}
