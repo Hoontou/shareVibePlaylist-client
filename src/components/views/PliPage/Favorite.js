@@ -28,6 +28,8 @@ const Favorite = (props) => {
 
     axios.post('/api/pli/getpli', body).then((res) => {
       setFavoriteNumber(res.data.pli.likes);
+      props.setNum(res.data.pli.likes); //자식에서 부모로 데이터 넘기기
+      //props로 부모의 useState 함수를 받아서 실행한다.
     });
   }, []);
 

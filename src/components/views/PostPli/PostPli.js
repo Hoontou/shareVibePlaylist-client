@@ -105,7 +105,9 @@ function PostPli() {
           ></circle>
         </svg>
       )}
-      <div style={{ width: '95%', margin: '1.5rem auto' }}>
+      <div
+        style={{ width: '95%', margin: '1.5rem auto', paddingBottom: '5rem' }}
+      >
         <div style={{ width: '100%' }}>
           <img
             alt='example'
@@ -122,7 +124,7 @@ function PostPli() {
         <p>바이브 웹에서 가져올 플리의</p>{' '}
         <p>주소를 통째로 복사해 붙여넣어 주세요.</p>
         <p>버튼은 한번만 누르고 기다려주세요 :)</p>
-        <form onSubmit={onSubmitHandler} style={{ margin: '3rem 0 0 0' }}>
+        <form onSubmit={onSubmitHandler} style={{ margin: '2rem 0 0 0' }}>
           <div className='input-group mb-3'>
             <input
               onChange={onUrlHandler}

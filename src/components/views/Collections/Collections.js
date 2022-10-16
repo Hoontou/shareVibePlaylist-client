@@ -67,7 +67,9 @@ const Collections = () => {
     <LoginPage />
   ) : (
     <div>
-      <div style={{ width: '85%', margin: '3rem auto' }}>
+      <div
+        style={{ width: '85%', margin: '3rem auto', paddingBottom: '3.5rem' }}
+      >
         <Title level={3} style={{ display: 'inline-block' }}>
           다른 유저의 컬렉션
         </Title>
