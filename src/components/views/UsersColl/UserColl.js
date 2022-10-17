@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import LoginPage from '../LoginPage/LoginPage';
 import { useNavigate, useParams } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
+import Follow from './Follow';
 const { Title } = Typography;
 const { Meta } = Card;
 
@@ -58,7 +59,6 @@ const UserColl = () => {
   const getUserInfo = (id) => {
     axios.post('/api/users/getuserinfo', { _id: id._id }).then((res) => {
       if (res.data.success) {
-        console.log(res.data.userData);
         const old = 2023 - parseInt(res.data.userData.birthyear);
         let gen = '';
         if (res.data.userData.gender == 'N') {
@@ -159,6 +159,9 @@ const UserColl = () => {
                 <p style={{ fontSize: '1.2rem' }}>"{comment}"</p>{' '}
                 <p>
                   {birthyear}세, {gender}
+                </p>
+                <p>
+                  <Follow _id={urlParams._id} />
                 </p>
               </div>
             </Grid>
