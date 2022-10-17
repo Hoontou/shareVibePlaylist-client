@@ -5,7 +5,7 @@ import Favorite from './Favorite';
 import NavBar from '../../common/NavBar/NavBar';
 import LoginPage from '../LoginPage/LoginPage';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
+import { Button } from '@mui/material';
 import EastIcon from '@mui/icons-material/East';
 import LikedPeople from './LikedPeople';
 
@@ -97,7 +97,12 @@ const PliPage = (props) => {
               </a>
             </div>
           </Button>
-          <div>
+        </Grid>
+        <Grid item xs={5}>
+          <div className='text-center' style={{ marginTop: '1.7rem' }}>
+            {localStorage.getItem('userData') && (
+              <Favorite setNum={setNum} pliId={_id._id} />
+            )}
             <Button
               onClick={handleClickOpen}
               variant='outlined'
@@ -105,13 +110,6 @@ const PliPage = (props) => {
             >
               <a style={{ color: 'black' }}>좋아요 누른 사람</a>
             </Button>
-          </div>
-        </Grid>
-        <Grid item xs={5}>
-          <div className='text-center' style={{ marginTop: '1.7rem' }}>
-            {localStorage.getItem('userData') && (
-              <Favorite setNum={setNum} pliId={_id._id} />
-            )}
           </div>
         </Grid>
 

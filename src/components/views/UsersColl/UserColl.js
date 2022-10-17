@@ -1,5 +1,5 @@
 import NavBar from '../../common/NavBar/NavBar';
-import { Card, Col, Typography, Row } from 'antd';
+import { Card, Col, Typography, Row, Result } from 'antd';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Modal from '@mui/material/Modal';
@@ -27,6 +27,9 @@ const UserColl = () => {
   const userId = !localStorage.getItem('userData')
     ? null
     : JSON.parse(localStorage.getItem('userData')).id;
+  const nick = !localStorage.getItem('userData')
+    ? null
+    : JSON.parse(localStorage.getItem('userData')).nickname;
 
   const style = {
     position: 'absolute',
@@ -102,6 +105,9 @@ const UserColl = () => {
   };
 
   useEffect(() => {
+    if (urlParams.nickname == nick) {
+      navigate('/myvibe');
+    }
     checkAuth(getPli, getUserInfo, urlParams);
   }, []);
 
@@ -136,11 +142,11 @@ const UserColl = () => {
       >
         <div>
           <Grid container spacing={4}>
-            <Grid item xs={5}>
+            <Grid item xs={4.5}>
               <div
                 style={{
-                  width: '140px',
-                  height: '140px',
+                  width: '130px',
+                  height: '130px',
                   borderRadius: '70%',
                   overflow: 'hidden',
                   marginBottom: '0.2rem',
@@ -154,14 +160,14 @@ const UserColl = () => {
                 />
               </div>
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={7.5}>
               <div>
                 <p style={{ fontSize: '1.2rem' }}>"{comment}"</p>{' '}
                 <p>
                   {birthyear}세, {gender}
                 </p>
                 <p>
-                  <Follow _id={urlParams._id} />
+                  <Follow userId={userId} _id={urlParams._id} />
                 </p>
               </div>
             </Grid>

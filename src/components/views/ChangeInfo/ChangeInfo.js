@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 import LoginPage from '../LoginPage/LoginPage';
 import { useNavigate } from 'react-router-dom';
+import { rootShouldForwardProp } from '@mui/material/styles/styled';
 const { Title } = Typography;
 
 const ChangeInfo = () => {
@@ -86,7 +87,7 @@ const ChangeInfo = () => {
       failMsg();
       return 0;
     }
-    if (comment.length > 30) {
+    if (comment.length > 22) {
       failMsg();
       return 0;
     }
@@ -100,14 +101,18 @@ const ChangeInfo = () => {
       comment: comment,
     };
     axios.post('/api/users/update', body).then((res) => {
-      if (res.data.success == true) {
+      if (res.data.success == 1) {
+        setSpin(false);
+        setMsg('바꾸려고 하는 닉네임이 이미 사용중이에요.');
+        handleOpen();
+      } else if (res.data.success == 2) {
         setSpin(false);
         localStorage.removeItem('userData');
         localStorage.setItem('userData', JSON.stringify(res.data.userData));
         navigate('/myvibe');
       } else {
         setSpin(false);
-        setMsg('서버에 문제가 있어 실패했어요. 나중에 다시 시도해주세요');
+        setMsg('서버에 문제가 있어 실패했어요. 나중에 다시 시도해주세요.');
         handleOpen();
       }
     });
@@ -175,7 +180,7 @@ const ChangeInfo = () => {
             margin='dense'
             fullWidth
             id='standard-basic'
-            label='코멘트 (30자 제한)'
+            label='코멘트 (22자 제한)'
             variant='standard'
             defaultValue={comment}
             onChange={onChangeC}

@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import Grid from '@mui/material/Grid';
 import { red } from '@mui/material/colors';
+import { Button } from '@mui/material';
 
 const Favorite = (props) => {
   const pliId = props.pliId;
@@ -56,27 +56,28 @@ const Favorite = (props) => {
   };
 
   return (
-    <Grid container spacing={2}>
-      <Grid style={{ marginTop: '1rem' }} item xs={7}>
-        Likes : {FavoriteNumber}
-      </Grid>
-      <Grid item xs={5}>
-        {Favorited ? (
-          <FavoriteIcon
-            fontSize='large'
-            sx={{ color: red[500] }}
-            onClick={onClickFavorite}
-          />
-        ) : (
-          <FavoriteBorderIcon
-            fontSize='large'
-            sx={{ color: red[500] }}
-            onClick={onClickFavorite}
-          />
-        )}
-        <div>&nbsp;click!</div>
-      </Grid>
-    </Grid>
+    <div>
+      <Button
+        color={Favorited ? 'error' : 'primary'}
+        variant='outlined'
+        onClick={onClickFavorite}
+        startIcon={
+          Favorited ? (
+            <FavoriteIcon
+              style={{ marginRight: '-0.2rem' }}
+              sx={{ color: red[500] }}
+            />
+          ) : (
+            <FavoriteBorderIcon
+              style={{ marginRight: '-0.2rem' }}
+              sx={{ color: red[500] }}
+            />
+          )
+        }
+      >
+        {FavoriteNumber} {Favorited ? 'Liked' : 'Like'}
+      </Button>
+    </div>
   );
 };
 

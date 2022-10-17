@@ -8,6 +8,10 @@ import axios from 'axios';
 import LoginPage from '../LoginPage/LoginPage';
 import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
+import { Button, ButtonGroup } from '@mui/material';
+import { red } from '@mui/material/colors';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FollowPeople from '../UsersColl/FollowPeople';
 const { Title } = Typography;
 const { Meta } = Card;
 const MyVibe = () => {
@@ -18,6 +22,9 @@ const MyVibe = () => {
   const [open, setOpen] = useState(false);
   const [plis, setPlis] = useState([]);
   const [msg, setMsg] = useState('');
+  const [followNum, setFollowNum] = useState(0);
+  const [followList, setFollowList] = useState([]);
+  const [openList, setOpenList] = useState(false);
   const style = {
     position: 'absolute',
     top: '50%',
@@ -58,20 +65,38 @@ const MyVibe = () => {
   const profileImg = !localStorage.getItem('userData')
     ? null
     : JSON.parse(localStorage.getItem('userData')).profile_image;
+  let body = {
+    userTo: userId,
+  };
 
-  const checkAuth = (callbackFunc) => {
+  const checkAuth = (callbackFunc, callbackFunc2) => {
     axios.post('/api/users/auth', { id: userId }).then((res) => {
       if (res.data.auth == 0) {
         logout();
       }
       if (res.data.auth == 1) {
         callbackFunc();
+        callbackFunc2();
       }
     });
   };
   const logout = () => {
     localStorage.clear();
     navigate('/login');
+  };
+
+  const getFollowList = () => {
+    axios.post('/api/follow/followpeopleMyvibe', body).then((res) => {
+      if (res.data.success) {
+        setFollowList(res.data.list);
+        setFollowNum(res.data.list.length);
+      } else {
+        //팔로우 불러오기 실패 코드작성
+      }
+    });
+  };
+  const onClickList = () => {
+    setOpenList(true);
   };
 
   const edit = () => {
@@ -101,7 +126,7 @@ const MyVibe = () => {
   };
 
   useEffect(() => {
-    checkAuth(getMyPli);
+    checkAuth(getMyPli, getFollowList);
   }, []);
 
   const renderCards = plis.map((pli, index) => {
@@ -135,11 +160,11 @@ const MyVibe = () => {
       >
         <div>
           <Grid container spacing={4}>
-            <Grid item xs={5}>
+            <Grid item xs={4.5}>
               <div
                 style={{
-                  width: '140px',
-                  height: '140px',
+                  width: '130px',
+                  height: '130px',
                   borderRadius: '70%',
                   overflow: 'hidden',
                   marginBottom: '0.2rem',
@@ -153,11 +178,37 @@ const MyVibe = () => {
                 />
               </div>
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={7.5}>
               <div>
                 <p style={{ fontSize: '1.2rem' }}>"{comment}"</p>{' '}
                 <p>
                   {old}세, {gen}
+                </p>
+                <p>
+                  <div>
+                    <ButtonGroup
+                      variant='outlined'
+                      aria-label='outlined button group'
+                    >
+                      <Button
+                        style={{ fontSize: '0.75rem' }}
+                        startIcon={
+                          <FavoriteIcon
+                            style={{ marginRight: '-0.2rem' }}
+                            sx={{ color: red[500] }}
+                          />
+                        }
+                      >
+                        {followNum} {'followed'}
+                      </Button>
+                      <Button onClick={onClickList}>list</Button>
+                    </ButtonGroup>
+                    <FollowPeople
+                      open={openList}
+                      list={followList}
+                      onClose={setOpenList}
+                    />
+                  </div>
                 </p>
               </div>
             </Grid>
