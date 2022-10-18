@@ -20,11 +20,14 @@ const MyVibe = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
   const [plis, setPlis] = useState([]);
   const [msg, setMsg] = useState('');
   const [followNum, setFollowNum] = useState(0);
   const [followList, setFollowList] = useState([]);
   const [openList, setOpenList] = useState(false);
+  const [followList2, setFollowList2] = useState([]);
+  const [openList2, setOpenList2] = useState(false);
   const [spin, setSpin] = useState(true);
   const style = {
     position: 'absolute',
@@ -96,6 +99,23 @@ const MyVibe = () => {
       }
     });
   };
+  const getFollowListFrom = () => {
+    setSpin(true);
+    axios
+      .post('/api/follow/followpeopleMyvibefrom', { userFrom: userId })
+      .then((res) => {
+        if (res.data.success) {
+          if (res.data.list.length == 0) {
+            setSpin(false);
+          } else if (res.data.list.length > 0) {
+            setFollowList2(res.data.list);
+            setOpenList2(true);
+          }
+        } else {
+          //팔로우 불러오기 실패 코드작성
+        }
+      });
+  };
   const onClickList = () => {
     setOpenList(true);
   };
@@ -136,7 +156,7 @@ const MyVibe = () => {
     checkAuth(getMyPli, getFollowList);
   }, []);
 
-  const renderCards = plis.reverse().map((pli, index) => {
+  const renderCards = plis.map((pli, index) => {
     return (
       <Col lg={6} md={8} xs={12} key={index}>
         <div style={{ position: 'relative' }}>
@@ -196,6 +216,7 @@ const MyVibe = () => {
                       aria-label='outlined button group'
                     >
                       <Button
+                        onClick={onClickList}
                         style={{ fontSize: '0.75rem' }}
                         startIcon={
                           <FavoriteIcon
@@ -206,12 +227,19 @@ const MyVibe = () => {
                       >
                         {followNum} {'followed'}
                       </Button>
-                      <Button onClick={onClickList}>list</Button>
+                      <Button onClick={getFollowListFrom}>list</Button>
                     </ButtonGroup>
                     <FollowPeople
+                      type={0}
                       open={openList}
                       list={followList}
                       onClose={setOpenList}
+                    />
+                    <FollowPeople
+                      type={1}
+                      open={openList2}
+                      list={followList2}
+                      onClose={setOpenList2}
                     />
                   </div>
                 </p>

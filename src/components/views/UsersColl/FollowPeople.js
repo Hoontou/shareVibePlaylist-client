@@ -23,7 +23,9 @@ const FollowPeople = (props) => {
   };
   return (
     <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>팔로우 누른 사람들</DialogTitle>
+      <DialogTitle>
+        {props.type == 0 ? '팔로우 누른 사람' : '내가 팔로우 한 사람'}
+      </DialogTitle>
       <List sx={{ pt: 0 }}>
         {list.map((item) => (
           <ListItem

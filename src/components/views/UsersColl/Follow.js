@@ -98,7 +98,7 @@ const Follow = (props) => {
         </Button>
         <Button onClick={openList}>list</Button>
       </ButtonGroup>
-      <FollowPeople open={open} list={followList} onClose={setOpen} />
+      <FollowPeople type={0} open={open} list={followList} onClose={setOpen} />
     </div>
   );
 };
