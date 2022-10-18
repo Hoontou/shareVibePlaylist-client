@@ -82,6 +82,9 @@ function PostPli() {
       });
   };
   useEffect(() => {
+    if (userId == null) {
+      navigate('/login');
+    }
     checkAuth();
     if (userId !== 'KZMTB7q2ldVJqtcmEx_6EhAq39EzQnTeJMYhNQFfksc') {
       alert('지금은 서버관리 때문에 관리자만 접근할 수 있어요 ㅜㅜ');

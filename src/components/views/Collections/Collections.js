@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, Col, Typography, Row } from 'antd';
 import img from '../../../img/002.jpg';
-import LoginPage from '../LoginPage/LoginPage';
 import { useNavigate } from 'react-router-dom';
 const { Title } = Typography;
 const { Meta } = Card;
@@ -46,6 +45,9 @@ const Collections = () => {
     });
   };
   useEffect(() => {
+    if (userId == null) {
+      navigate('/login');
+    }
     checkAuth(loadCollections);
   }, []);
 
@@ -65,9 +67,7 @@ const Collections = () => {
     );
   });
 
-  return !localStorage.getItem('userData') ? (
-    <LoginPage />
-  ) : (
+  return (
     <div>
       <div
         style={{ width: '85%', margin: '3rem auto', paddingBottom: '3.5rem' }}

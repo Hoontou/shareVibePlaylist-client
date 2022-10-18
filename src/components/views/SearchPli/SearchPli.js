@@ -5,16 +5,19 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import './SearchPli.scss';
-import LoginPage from '../LoginPage/LoginPage';
+import { useNavigate } from 'react-router-dom';
 
 const { Meta } = Card;
 
 const SearchPli = () => {
+  const navigate = useNavigate();
   const [plis, setPlis] = useState([]);
   const [value, setValue] = useState('');
   const [add, setAdd] = useState([]);
   const [spin, setSpin] = useState(true);
-
+  const userId = !localStorage.getItem('userData')
+    ? null
+    : JSON.parse(localStorage.getItem('userData')).id;
   const fetchPliSearch = () => {
     if (localStorage.getItem('userData')) {
       axios.get('/api/pli/getplis/searchpli').then((res) => {
@@ -60,6 +63,9 @@ const SearchPli = () => {
     fetchPliSearch();
   }, []);
   useEffect(() => {
+    if (userId == null) {
+      navigate('/login');
+    }
     if (value.length >= 2) {
       // 두글자 이상일 때 검색실행
       search(value); // 글자 바뀔때 마다 검색함
@@ -90,9 +96,7 @@ const SearchPli = () => {
     );
   });
 
-  return !localStorage.getItem('userData') ? (
-    <LoginPage />
-  ) : (
+  return (
     <div>
       <div
         style={{ width: '85%', margin: '1.5rem auto', paddingBottom: '3rem' }}

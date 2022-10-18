@@ -6,15 +6,16 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import axios from 'axios';
-import LoginPage from '../LoginPage/LoginPage';
 import { useNavigate } from 'react-router-dom';
-import { rootShouldForwardProp } from '@mui/material/styles/styled';
 const { Title } = Typography;
 
 const ChangeInfo = () => {
   const navigate = useNavigate();
   const userData = localStorage.getItem('userData');
   const user = JSON.parse(userData);
+  const userId = !localStorage.getItem('userData')
+    ? null
+    : JSON.parse(localStorage.getItem('userData')).id;
   const [yearold, setYearold] = useState(`${2023 - parseInt(user.birthyear)}`);
   const [gender, setGender] = useState(user.gender);
   const [nickname, setNickname] = useState(user.nickname);
@@ -117,10 +118,13 @@ const ChangeInfo = () => {
       }
     });
   };
+  useEffect(() => {
+    if (userId == null) {
+      navigate('/login');
+    }
+  });
 
-  return !localStorage.getItem('userData') ? (
-    <LoginPage />
-  ) : (
+  return (
     <div>
       <div style={{ width: '85%', margin: '1.5rem auto' }}>
         <Title level={3} style={{ display: 'inline-block' }}>

@@ -105,6 +105,9 @@ const UserColl = () => {
   };
 
   useEffect(() => {
+    if (userId == null) {
+      navigate('/login');
+    }
     if (urlParams.nickname == nick) {
       navigate('/myvibe');
     }
@@ -133,9 +136,7 @@ const UserColl = () => {
     );
   });
 
-  return !localStorage.getItem('userData') ? (
-    <LoginPage />
-  ) : (
+  return (
     <div>
       <div
         style={{ width: '85%', margin: '1.5rem auto', paddingBottom: '3.5rem' }}

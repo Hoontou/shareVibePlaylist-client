@@ -66,11 +66,12 @@ const PliPage = (props) => {
   };
 
   useEffect(() => {
+    if (userId == null) {
+      navigate('/login');
+    }
     checkAuth(getPli, _id);
   });
-  return !localStorage.getItem('userData') ? (
-    <LoginPage />
-  ) : (
+  return (
     <div style={{ width: '100%', margin: '0', paddingBottom: '3.5rem' }}>
       <div
         style={{

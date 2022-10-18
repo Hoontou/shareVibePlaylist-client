@@ -130,6 +130,9 @@ const MyVibe = () => {
   };
 
   useEffect(() => {
+    if (userId == null) {
+      navigate('/login');
+    }
     checkAuth(getMyPli, getFollowList);
   }, []);
 
@@ -155,9 +158,7 @@ const MyVibe = () => {
     );
   });
 
-  return !localStorage.getItem('userData') ? (
-    <LoginPage />
-  ) : (
+  return (
     <div>
       <div
         style={{ width: '85%', margin: '1.5rem auto', paddingBottom: '3.5rem' }}
