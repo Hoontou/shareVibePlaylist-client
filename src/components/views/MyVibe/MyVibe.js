@@ -136,7 +136,7 @@ const MyVibe = () => {
     checkAuth(getMyPli, getFollowList);
   }, []);
 
-  const renderCards = plis.map((pli, index) => {
+  const renderCards = plis.reverse().map((pli, index) => {
     return (
       <Col lg={6} md={8} xs={12} key={index}>
         <div style={{ position: 'relative' }}>
