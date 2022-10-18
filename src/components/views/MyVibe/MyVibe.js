@@ -73,7 +73,7 @@ const MyVibe = () => {
     userTo: userId,
   };
 
-  const checkAuth = (callbackFunc, callbackFunc2) => {
+  const checkAuth = (callbackFunc, callbackFunc2, callbackFunc3) => {
     axios.post('/api/users/auth', { id: userId }).then((res) => {
       if (res.data.auth == 0) {
         logout();
@@ -81,7 +81,9 @@ const MyVibe = () => {
       if (res.data.auth == 1) {
         callbackFunc();
         callbackFunc2();
+        callbackFunc3();
       }
+      setSpin(false);
     });
   };
   const logout = () => {
@@ -100,16 +102,13 @@ const MyVibe = () => {
     });
   };
   const getFollowListFrom = () => {
-    setSpin(true);
     axios
       .post('/api/follow/followpeopleMyvibefrom', { userFrom: userId })
       .then((res) => {
         if (res.data.success) {
           if (res.data.list.length == 0) {
-            setSpin(false);
           } else if (res.data.list.length > 0) {
             setFollowList2(res.data.list);
-            setOpenList2(true);
           }
         } else {
           //팔로우 불러오기 실패 코드작성
@@ -118,6 +117,11 @@ const MyVibe = () => {
   };
   const onClickList = () => {
     setOpenList(true);
+  };
+  const onClickList2 = () => {
+    if (followList2.length > 0) {
+      setOpenList2(true);
+    }
   };
 
   const edit = () => {
@@ -134,13 +138,10 @@ const MyVibe = () => {
       .then((res) => {
         if (res.data.success === 2) {
           setPlis([...res.data.likePli]);
-          setSpin(false);
         } else if (res.data.success === 1) {
-          setSpin(false);
           setMsg('서버에 오류가 생겨 정보를 가져오지 못했어요..');
           handleOpen();
         } else if (res.data.success === 0) {
-          setSpin(false);
           setMsg(
             '마음에 드는 플리에 좋아요를 눌러보세요. 보관함에서 모아볼 수 있어요.'
           );
@@ -153,7 +154,7 @@ const MyVibe = () => {
     if (userId == null) {
       navigate('/login');
     }
-    checkAuth(getMyPli, getFollowList);
+    checkAuth(getMyPli, getFollowList, getFollowListFrom);
   }, []);
 
   const renderCards = plis.map((pli, index) => {
@@ -227,7 +228,7 @@ const MyVibe = () => {
                       >
                         {followNum} {'followed'}
                       </Button>
-                      <Button onClick={getFollowListFrom}>list</Button>
+                      <Button onClick={onClickList2}>list</Button>
                     </ButtonGroup>
                     <FollowPeople
                       type={0}
