@@ -43,6 +43,7 @@ const LandingPage = () => {
     }, 800);
   };
   const loadMoreItems = () => {
+    setSpin(true);
     if (Align === 'Latest Updated') {
       fetchPlisLatest();
       setPage(page + 1);
@@ -53,6 +54,7 @@ const LandingPage = () => {
       fetchPlisFavorite();
       setPage(page + 1);
     }
+    setSpin(false);
   };
   const checkAuth = (callbackFunc) => {
     axios.post('/api/users/auth', { id: userId }).then((res) => {
@@ -113,6 +115,10 @@ const LandingPage = () => {
       });
   };
   useEffect(() => {
+    if (userId == null) {
+      navigate('/login');
+    }
+    setSpin(true);
     checkAuth(loadMoreItems);
     //로컬스토리지에 유저정보 없으면 로그인페이지로 이동
 
@@ -144,9 +150,7 @@ const LandingPage = () => {
     );
   });
 
-  return !localStorage.getItem('userData') ? (
-    <LoginPage />
-  ) : (
+  return (
     <div>
       <div style={{ width: '85%', margin: '1.5rem auto' }}>
         <Title level={3} style={{ display: 'inline-block' }}>

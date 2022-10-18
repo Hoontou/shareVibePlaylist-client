@@ -1,3 +1,7 @@
+//추후 좋아요 버튼을 팔로우버튼과 같이 리팩토링 해야함
+//근데 좋아요 버튼 만들면서 자식과 부모간의 state공유하는법을 익힘
+//리덕스로 구현하면 쉽다는데?
+
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -14,6 +18,7 @@ const PliPage = (props) => {
   let _id = useParams();
   const [open, setOpen] = useState(false);
   const [people, setPeople] = useState([]);
+  const [spin, setSpin] = useState(true);
   const [Url, setUrl] = useState('');
   const [num, setNum] = useState(); //자식에게서 데이터 받기, props로 부모의 useState함수를 넘겨주고
   //자식에서 'props.부모의state함수' 를 실행한다.
@@ -24,8 +29,10 @@ const PliPage = (props) => {
 
   const handleClickOpen = () => {
     if (num !== 0) {
+      setSpin(true);
       axios.post('/api/favorite/likedpeople', { _id: _id._id }).then((res) => {
         setPeople(res.data.list);
+        setSpin(false);
         setOpen(true);
       });
     }
@@ -101,8 +108,15 @@ const PliPage = (props) => {
         <Grid item xs={5}>
           <div className='text-center' style={{ marginTop: '1.7rem' }}>
             {localStorage.getItem('userData') && (
-              <Favorite setNum={setNum} pliId={_id._id} />
+              <Favorite
+                setSpin={setSpin}
+                spin={spin}
+                setNum={setNum}
+                num={num}
+                pliId={_id._id}
+              />
             )}
+
             <Button
               onClick={handleClickOpen}
               variant='outlined'
@@ -116,8 +130,19 @@ const PliPage = (props) => {
         <Grid item xs={1}></Grid>
       </Grid>
 
-      <LikedPeople open={open} list={people} onClose={handleClose} />
-
+      <LikedPeople open={open} list={people} onClose={handleClose} num={num} />
+      {spin && (
+        <svg className='spinner' viewBox='0 0 50 50'>
+          <circle
+            className='path'
+            cx='25'
+            cy='25'
+            r='20'
+            fill='none'
+            strokeWidth='5'
+          ></circle>
+        </svg>
+      )}
       <NavBar value={0} />
     </div>
   );

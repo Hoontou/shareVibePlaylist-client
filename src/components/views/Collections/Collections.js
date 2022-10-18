@@ -11,6 +11,7 @@ const { Meta } = Card;
 const Collections = () => {
   const navigate = useNavigate();
   const [coll, setColl] = useState([]);
+  const [spin, setSpin] = useState(true);
   const userId = !localStorage.getItem('userData')
     ? null
     : JSON.parse(localStorage.getItem('userData')).id;
@@ -41,6 +42,7 @@ const Collections = () => {
   const loadCollections = () => {
     axios.get('/api/users/getcollections').then((res) => {
       setColl([...res.data.collections]);
+      setSpin(false);
     });
   };
   useEffect(() => {
@@ -83,6 +85,18 @@ const Collections = () => {
           justifyContent: 'center',
         }}
       ></div>
+      {spin && (
+        <svg className='spinner' viewBox='0 0 50 50'>
+          <circle
+            className='path'
+            cx='25'
+            cy='25'
+            r='20'
+            fill='none'
+            strokeWidth='5'
+          ></circle>
+        </svg>
+      )}
       <NavBar value={2} />
     </div>
   );

@@ -7,6 +7,7 @@ import Dialog from '@mui/material/Dialog';
 import PersonIcon from '@mui/icons-material/Person';
 import { blue } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
+import { DialogTitle } from '@mui/material';
 
 const FollowPeople = (props) => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const FollowPeople = (props) => {
   };
   return (
     <Dialog onClose={handleClose} open={open}>
+      <DialogTitle>팔로우 누른 사람들</DialogTitle>
       <List sx={{ pt: 0 }}>
         {list.map((item) => (
           <ListItem

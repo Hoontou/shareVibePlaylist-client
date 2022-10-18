@@ -30,11 +30,23 @@ const SearchPli = () => {
     }
   };
   const search = (word) => {
+    //str.replace(/(\s*)/g,'')는 str의 모든 공백제거.
+    // 공백제거 후 대문자 전환 후 title, subtitle과 일치하는 결과만 result에 담아준다.
     let result = [];
     plis.map((pli, index) => {
-      if (pli.title.toUpperCase().includes(word.toUpperCase())) {
+      if (
+        pli.title
+          .replace(/(\s*)/g, '')
+          .toUpperCase()
+          .includes(word.replace(/(\s*)/g, '').toUpperCase())
+      ) {
         result.push(pli);
-      } else if (pli.subTitle.toUpperCase().includes(word.toUpperCase())) {
+      } else if (
+        pli.subTitle
+          .replace(/(\s*)/g, '')
+          .toUpperCase()
+          .includes(word.replace(/(\s*)/g, '').toUpperCase())
+      ) {
         result.push(pli);
       }
     });
@@ -87,7 +99,7 @@ const SearchPli = () => {
       >
         <InputGroup className='mb-3'>
           <Form.Control
-            placeholder='적적해서 서로의 전화기를 꺼내'
+            placeholder='아이유 대표곡'
             onChange={onChange}
             value={value}
           />

@@ -4,6 +4,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Dialog from '@mui/material/Dialog';
+import { DialogTitle } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import { blue } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
@@ -22,6 +23,7 @@ const LikedPeople = (props) => {
 
   return (
     <Dialog onClose={handleClose} open={open}>
+      <DialogTitle>좋아요 누른 사람들</DialogTitle>
       <List sx={{ pt: 0 }}>
         {list.map((item) => (
           <ListItem

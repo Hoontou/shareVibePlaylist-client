@@ -25,6 +25,7 @@ const MyVibe = () => {
   const [followNum, setFollowNum] = useState(0);
   const [followList, setFollowList] = useState([]);
   const [openList, setOpenList] = useState(false);
+  const [spin, setSpin] = useState(true);
   const style = {
     position: 'absolute',
     top: '50%',
@@ -113,10 +114,13 @@ const MyVibe = () => {
       .then((res) => {
         if (res.data.success === 2) {
           setPlis([...res.data.likePli]);
+          setSpin(false);
         } else if (res.data.success === 1) {
+          setSpin(false);
           setMsg('서버에 오류가 생겨 정보를 가져오지 못했어요..');
           handleOpen();
         } else if (res.data.success === 0) {
+          setSpin(false);
           setMsg(
             '마음에 드는 플리에 좋아요를 눌러보세요. 보관함에서 모아볼 수 있어요.'
           );
@@ -238,6 +242,18 @@ const MyVibe = () => {
           </Typography>
         </Box>
       </Modal>
+      {spin && (
+        <svg className='spinner' viewBox='0 0 50 50'>
+          <circle
+            className='path'
+            cx='25'
+            cy='25'
+            r='20'
+            fill='none'
+            strokeWidth='5'
+          ></circle>
+        </svg>
+      )}
       <NavBar value={4} />
     </div>
   );
