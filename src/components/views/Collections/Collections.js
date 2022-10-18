@@ -67,6 +67,13 @@ const Collections = () => {
     );
   });
 
+  // src={
+  //   value.profile_image ==
+  //   'https://ssl.pstatic.net/static/pwe/address/img_profile.png'
+  //     ? img
+  //     : value.profile_image
+  // } 유저컬렉션 카드의 사진을 프로필사진으로 변경하는 코드.
+  //뭔가 이상한걸 올리진 않을까 해서 아직 적용안함.
   return (
     <div>
       <div

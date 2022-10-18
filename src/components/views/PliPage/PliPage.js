@@ -107,7 +107,7 @@ const PliPage = (props) => {
           </Button>
         </Grid>
         <Grid item xs={5}>
-          <div className='text-center' style={{ marginTop: '1.7rem' }}>
+          <div className='text-center'>
             {localStorage.getItem('userData') && (
               <Favorite
                 setSpin={setSpin}
