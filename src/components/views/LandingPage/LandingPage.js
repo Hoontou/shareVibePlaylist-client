@@ -103,7 +103,7 @@ const LandingPage = () => {
   };
   const fetchPlisOldest = () => {
     axios
-      .post('https://share-vibe-pli.herokuapp.com/api/pli/getPlis/oldest', {
+      .post('/api/pli/getPlis/oldest', {
         pageNum: page,
       })
       .then((res) => {
