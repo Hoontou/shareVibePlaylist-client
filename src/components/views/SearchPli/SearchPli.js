@@ -89,7 +89,7 @@ const SearchPli = () => {
         <div style={{ paddingTop: '0.3rem', paddingBottom: '1rem' }}>
           <Meta title={pli.title} />
           <span>
-            {pli.subTitle}, Likes:{pli.likes}{' '}
+            {pli.subTitle}, 좋아요:{pli.likes}{' '}
           </span>
         </div>
       </Col>
