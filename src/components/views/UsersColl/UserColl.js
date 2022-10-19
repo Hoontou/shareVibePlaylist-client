@@ -163,7 +163,9 @@ const UserColl = () => {
             </Grid>
             <Grid item xs={7.5}>
               <div>
-                <p style={{ fontSize: '1.2rem' }}>"{comment}"</p>{' '}
+                <p style={{ fontSize: '1.2rem', fontWeight: '600' }}>
+                  "{comment}"
+                </p>{' '}
                 <p>
                   {birthyear}세, {gender}
                 </p>
