@@ -102,8 +102,11 @@ const LoginPage = () => {
           style={{ fontSize: '0.6rem', position: 'relative', top: '170px' }}
           className='stagger-4'
         >
+          <p style={{ fontSize: '1rem' }}>
+            대학생 토이프로젝트이며 네이버와는 관련 없습니다.
+          </p>
           <p>모바일 화면에 최적화</p>
-          <p>대학생 토이프로젝트이며 주기적으로 개선중 입니다.</p>
+
           <p>각종 오류제보, 기능건의 등등</p>
           <p>hoontou@gmail.com</p>
           <p>using MERN stack</p>
