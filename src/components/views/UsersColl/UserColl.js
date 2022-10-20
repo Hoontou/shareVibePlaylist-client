@@ -164,16 +164,18 @@ const UserColl = () => {
               <div>
                 <p style={{ fontSize: '1.2rem', fontWeight: '600' }}>
                   "{comment}"
-                </p>{' '}
+                </p>
                 <p>
                   {birthyear}세, {gender}
                 </p>
-                <Follow userId={userId} _id={urlParams._id} />
+                <div>
+                  <Follow userId={userId} _id={urlParams._id} />
+                </div>
               </div>
             </Grid>
           </Grid>
         </div>
-        <div>
+        <div style={{ marginTop: '0.5rem' }}>
           <Title level={3} style={{ display: 'inline-block' }}>
             {`${urlParams.nickname}의 컬렉션`}
           </Title>

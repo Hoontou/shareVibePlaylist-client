@@ -256,7 +256,7 @@ const MyVibe = () => {
               </div>
             </Grid>
           </Grid>
-          <div>
+          <div style={{ marginTop: '0.5rem' }}>
             <Title level={3} style={{ display: 'inline-block' }}>
               {Nick}님의 저장소
               <EditIcon fontSize='mideum' onClick={edit} />
