@@ -1,10 +1,9 @@
 import NavBar from '../../common/NavBar/NavBar';
-import { Card, Col, Typography, Row, Result } from 'antd';
+import { Card, Col, Typography, Row } from 'antd';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import LoginPage from '../LoginPage/LoginPage';
 import { useNavigate, useParams } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Follow from './Follow';
@@ -169,9 +168,7 @@ const UserColl = () => {
                 <p>
                   {birthyear}세, {gender}
                 </p>
-                <p>
-                  <Follow userId={userId} _id={urlParams._id} />
-                </p>
+                <Follow userId={userId} _id={urlParams._id} />
               </div>
             </Grid>
           </Grid>

@@ -5,7 +5,6 @@ import Modal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import axios from 'axios';
-import LoginPage from '../LoginPage/LoginPage';
 import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import { Button, ButtonGroup } from '@mui/material';
@@ -20,7 +19,6 @@ const MyVibe = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [open, setOpen] = useState(false);
-  const [open2, setOpen2] = useState(false);
   const [plis, setPlis] = useState([]);
   const [msg, setMsg] = useState('');
   const [followNum, setFollowNum] = useState(0);
@@ -213,44 +211,48 @@ const MyVibe = () => {
                   }}
                 >
                   "{comment}"
-                </p>{' '}
+                </p>
                 <p>
                   {old}세, {gen}
                 </p>
-                <p>
-                  <div>
-                    <ButtonGroup
-                      variant='outlined'
-                      aria-label='outlined button group'
+                <div>
+                  <ButtonGroup
+                    variant='outlined'
+                    aria-label='outlined button group'
+                  >
+                    <Button
+                      color={followList !== 0 ? 'error' : 'primary'}
+                      onClick={onClickList}
+                      style={{ fontSize: '0.75rem' }}
+                      startIcon={
+                        <FavoriteIcon
+                          style={{ marginRight: '-0.2rem' }}
+                          sx={{ color: red[500] }}
+                        />
+                      }
                     >
-                      <Button
-                        onClick={onClickList}
-                        style={{ fontSize: '0.75rem' }}
-                        startIcon={
-                          <FavoriteIcon
-                            style={{ marginRight: '-0.2rem' }}
-                            sx={{ color: red[500] }}
-                          />
-                        }
-                      >
-                        {followNum} {'followed'}
-                      </Button>
-                      <Button onClick={onClickList2}>list</Button>
-                    </ButtonGroup>
-                    <FollowPeople
-                      type={0}
-                      open={openList}
-                      list={followList}
-                      onClose={setOpenList}
-                    />
-                    <FollowPeople
-                      type={1}
-                      open={openList2}
-                      list={followList2}
-                      onClose={setOpenList2}
-                    />
-                  </div>
-                </p>
+                      {followNum} {'followed'}
+                    </Button>
+                    <Button
+                      color={followList2.length !== 0 ? 'error' : 'primary'}
+                      onClick={onClickList2}
+                    >
+                      list
+                    </Button>
+                  </ButtonGroup>
+                  <FollowPeople
+                    type={0}
+                    open={openList}
+                    list={followList}
+                    onClose={setOpenList}
+                  />
+                  <FollowPeople
+                    type={1}
+                    open={openList2}
+                    list={followList2}
+                    onClose={setOpenList2}
+                  />
+                </div>
               </div>
             </Grid>
           </Grid>

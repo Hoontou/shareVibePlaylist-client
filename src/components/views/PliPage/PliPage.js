@@ -7,9 +7,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Favorite from './Favorite';
 import NavBar from '../../common/NavBar/NavBar';
-import LoginPage from '../LoginPage/LoginPage';
 import Grid from '@mui/material/Grid';
-import { Button } from '@mui/material';
+import { Button, ButtonGroup } from '@mui/material';
 import EastIcon from '@mui/icons-material/East';
 import LikedPeople from './LikedPeople';
 
@@ -61,7 +60,11 @@ const PliPage = (props) => {
       _id: _id._id,
     };
     axios.post('/api/pli/getpli', body).then((res) => {
-      setUrl(res.data.pli.url);
+      if (res.data.success) {
+        setUrl(res.data.pli.url);
+      } else {
+        navigate('/');
+      }
     });
   };
 
@@ -70,7 +73,7 @@ const PliPage = (props) => {
       navigate('/login');
     }
     checkAuth(getPli, _id);
-  });
+  }, []);
   return (
     <div style={{ width: '100%', margin: '0', paddingBottom: '3.5rem' }}>
       <div
@@ -97,7 +100,7 @@ const PliPage = (props) => {
           <Button
             endIcon={<EastIcon />}
             variant='outlined'
-            style={{ marginTop: '0.8rem' }}
+            style={{ marginTop: '0.6rem' }}
           >
             <div className='text-center'>
               <a style={{ color: 'black' }} href={Url} target='_blank'>
@@ -107,25 +110,23 @@ const PliPage = (props) => {
           </Button>
         </Grid>
         <Grid item xs={5}>
-          <div className='text-center'>
-            {localStorage.getItem('userData') && (
-              <Favorite
-                setSpin={setSpin}
-                spin={spin}
-                setNum={setNum}
-                num={num}
-                pliId={_id._id}
-              />
-            )}
+          <ButtonGroup variant='outlined' aria-label='outlined button group'>
+            <Favorite
+              setSpin={setSpin}
+              spin={spin}
+              setNum={setNum}
+              num={num}
+              pliId={_id._id}
+            />
 
             <Button
+              color={num !== 0 ? 'error' : 'primary'}
               onClick={handleClickOpen}
               variant='outlined'
-              style={{ marginTop: '0.8rem' }}
             >
-              <a style={{ color: 'black' }}>좋아요 누른 사람</a>
+              list
             </Button>
-          </div>
+          </ButtonGroup>
         </Grid>
 
         <Grid item xs={1}></Grid>

@@ -4,8 +4,10 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { red } from '@mui/material/colors';
 import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const Favorite = (props) => {
+  const navigate = useNavigate();
   const pliId = props.pliId;
   const userFrom = JSON.parse(localStorage.getItem('userData'));
   let body = {
@@ -27,12 +29,16 @@ const Favorite = (props) => {
     });
 
     axios.post('/api/pli/getpli', body).then((res) => {
-      setFavoriteNumber(res.data.pli.likes);
-      props.setNum(res.data.pli.likes); //자식에서 부모로 데이터 넘기기
-      props.setSpin(false);
-      //props로 부모의 useState 함수를 받아서 실행한다.
+      if (res.data.success) {
+        setFavoriteNumber(res.data.pli.likes);
+        props.setNum(res.data.pli.likes); //자식에서 부모로 데이터 넘기기
+        props.setSpin(false);
+        //props로 부모의 useState 함수를 받아서 실행한다.
+      } else {
+        navigate('/');
+      }
     });
-  }, []);
+  });
 
   const onClickFavorite = () => {
     props.setSpin(true);
@@ -61,28 +67,26 @@ const Favorite = (props) => {
   };
 
   return (
-    <div>
-      <Button
-        color={Favorited ? 'error' : 'primary'}
-        variant='outlined'
-        onClick={onClickFavorite}
-        startIcon={
-          Favorited ? (
-            <FavoriteIcon
-              style={{ marginRight: '-0.2rem' }}
-              sx={{ color: red[500] }}
-            />
-          ) : (
-            <FavoriteBorderIcon
-              style={{ marginRight: '-0.2rem' }}
-              sx={{ color: red[500] }}
-            />
-          )
-        }
-      >
-        {FavoriteNumber} {Favorited ? 'Liked' : 'Like'}
-      </Button>
-    </div>
+    <Button
+      color={Favorited ? 'error' : 'primary'}
+      variant='outlined'
+      onClick={onClickFavorite}
+      startIcon={
+        Favorited ? (
+          <FavoriteIcon
+            style={{ marginRight: '-0.2rem' }}
+            sx={{ color: red[500] }}
+          />
+        ) : (
+          <FavoriteBorderIcon
+            style={{ marginRight: '-0.2rem' }}
+            sx={{ color: red[500] }}
+          />
+        )
+      }
+    >
+      {FavoriteNumber} {Favorited ? 'Liked' : 'Like'}
+    </Button>
   );
 };
 

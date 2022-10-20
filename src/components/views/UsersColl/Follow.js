@@ -1,5 +1,4 @@
 import { Button, ButtonGroup } from '@mui/material';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { red } from '@mui/material/colors';
@@ -80,6 +79,7 @@ const Follow = (props) => {
         <Button
           onClick={addFollow}
           style={{ fontSize: '0.75rem' }}
+          color={followed ? 'error' : 'primary'}
           startIcon={
             followed ? (
               <FavoriteIcon
@@ -96,7 +96,12 @@ const Follow = (props) => {
         >
           {followNum} {followed ? 'followed' : 'follow'}
         </Button>
-        <Button onClick={openList}>list</Button>
+        <Button
+          color={followNum !== 0 ? 'error' : 'primary'}
+          onClick={openList}
+        >
+          list
+        </Button>
       </ButtonGroup>
       <FollowPeople type={0} open={open} list={followList} onClose={setOpen} />
     </div>
