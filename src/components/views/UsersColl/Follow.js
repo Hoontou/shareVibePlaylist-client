@@ -102,8 +102,8 @@ const Follow = (props) => {
         >
           <span
             style={{
-              marginRight: '-0.4rem',
-              marginLeft: '-0.4rem',
+              marginRight: '-0.5rem',
+              marginLeft: '-0.6rem',
             }}
           >
             list

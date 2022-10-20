@@ -141,7 +141,7 @@ const UserColl = () => {
         style={{ width: '85%', margin: '1.5rem auto', paddingBottom: '3.5rem' }}
       >
         <div>
-          <Grid container spacing={4}>
+          <Grid container spacing={6}>
             <Grid item xs={4.5}>
               <div
                 style={{
