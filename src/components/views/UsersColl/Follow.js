@@ -100,7 +100,14 @@ const Follow = (props) => {
           color={followNum !== 0 ? 'error' : 'primary'}
           onClick={openList}
         >
-          list
+          <span
+            style={{
+              marginRight: '-0.4rem',
+              marginLeft: '-0.4rem',
+            }}
+          >
+            list
+          </span>
         </Button>
       </ButtonGroup>
       <FollowPeople type={0} open={open} list={followList} onClose={setOpen} />

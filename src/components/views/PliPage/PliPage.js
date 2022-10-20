@@ -94,44 +94,46 @@ const PliPage = (props) => {
         ></iframe>
       </div>
       <hr />
-      <Grid container spacing={5}>
-        <Grid item xs={1}></Grid>
-        <Grid item xs={5}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          paddingBottom: '5rem',
+        }}
+      >
+        <Button
+          endIcon={<EastIcon />}
+          variant='outlined'
+          style={{ marginTop: '0.6rem' }}
+        >
+          <div className='text-center'>
+            <a style={{ color: 'black' }} href={Url} target='_blank'>
+              바이브 웹으로
+            </a>
+          </div>
+        </Button>
+        <ButtonGroup
+          style={{ marginTop: '0.6rem', marginLeft: '2rem', float: 'right' }}
+          variant='outlined'
+          aria-label='outlined button group'
+        >
+          <Favorite
+            setSpin={setSpin}
+            spin={spin}
+            setNum={setNum}
+            num={num}
+            pliId={_id._id}
+          />
+
           <Button
-            endIcon={<EastIcon />}
+            color={num !== 0 ? 'error' : 'primary'}
+            onClick={handleClickOpen}
             variant='outlined'
-            style={{ marginTop: '0.6rem' }}
           >
-            <div className='text-center'>
-              <a style={{ color: 'black' }} href={Url} target='_blank'>
-                바이브 웹으로
-              </a>
-            </div>
+            list
           </Button>
-        </Grid>
-        <Grid item xs={5}>
-          <ButtonGroup variant='outlined' aria-label='outlined button group'>
-            <Favorite
-              setSpin={setSpin}
-              spin={spin}
-              setNum={setNum}
-              num={num}
-              pliId={_id._id}
-            />
-
-            <Button
-              color={num !== 0 ? 'error' : 'primary'}
-              onClick={handleClickOpen}
-              variant='outlined'
-            >
-              list
-            </Button>
-          </ButtonGroup>
-        </Grid>
-
-        <Grid item xs={1}></Grid>
-      </Grid>
-
+        </ButtonGroup>
+      </div>
       <LikedPeople open={open} list={people} onClose={handleClose} num={num} />
       {spin && (
         <svg className='spinner' viewBox='0 0 50 50'>

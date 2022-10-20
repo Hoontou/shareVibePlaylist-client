@@ -221,7 +221,7 @@ const MyVibe = () => {
                     aria-label='outlined button group'
                   >
                     <Button
-                      color={followList !== 0 ? 'error' : 'primary'}
+                      color={followList.length !== 0 ? 'error' : 'primary'}
                       onClick={onClickList}
                       style={{ fontSize: '0.75rem' }}
                       startIcon={
@@ -237,7 +237,14 @@ const MyVibe = () => {
                       color={followList2.length !== 0 ? 'error' : 'primary'}
                       onClick={onClickList2}
                     >
-                      list
+                      <span
+                        style={{
+                          marginRight: '-0.4rem',
+                          marginLeft: '-0.4rem',
+                        }}
+                      >
+                        list
+                      </span>
                     </Button>
                   </ButtonGroup>
                   <FollowPeople
