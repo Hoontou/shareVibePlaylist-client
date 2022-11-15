@@ -76,6 +76,8 @@ const LoginPage = () => {
             alt='example'
             src={vibeImg}
             style={{
+              marginTop: '50px',
+              marginBottom: '-80px',
               maxWidth: '500px',
               width: '100%',
               height: 'auto',
@@ -85,9 +87,9 @@ const LoginPage = () => {
         </div>
       </div>
       <div style={{ position: 'relative', top: '150px' }}>
-        <h2 className='stagger-1'>네이버 바이브</h2>
+        <h5 className='stagger-1'>바이브 사용자를 위한</h5>
         <h1 className='stagger-1'>플레이리스트 저장소</h1>
-        <p className='stagger-2'>플리 바다에서 취향에 맞는 플리를 찾아봐요</p>
+        {/*<p className='stagger-2'>플리 바다에서 취향에 맞는 플리를 찾아봐요</p>*/}
       </div>
       <div
         className='login-area stagger-3'
