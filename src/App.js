@@ -9,6 +9,7 @@ import SearchPli from './components/views/SearchPli/SearchPli';
 import MyVibe from './components/views/MyVibe/MyVibe';
 import UserColl from './components/views/UsersColl/UserColl';
 import ChangeInfo from './components/views/ChangeInfo/ChangeInfo';
+import Hint from './components/views/Hint/Hint';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path='/myvibe' element={<MyVibe />} />
         <Route path='/users/:_id/:nickname' element={<UserColl />} />
         <Route path='/changeinfo' element={<ChangeInfo />} />
+        <Route path='/hint' element={<Hint />} />
       </Routes>
     </Router>
   );
