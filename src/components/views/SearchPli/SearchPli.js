@@ -74,7 +74,7 @@ const SearchPli = () => {
     }
   }, [value]);
 
-  const renderCards = plis.map((pli, index) => {
+  const renderCards = add.map((pli, index) => {
     return pli.thum[1] == undefined ? (
       <Col lg={6} md={8} xs={12} key={index}>
         <div style={{ position: 'relative' }}>
