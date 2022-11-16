@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import AnnouncementIcon from '@mui/icons-material/Announcement';
 import Grid from '@mui/material/Grid';
 import { Button, ButtonGroup } from '@mui/material';
 import { red } from '@mui/material/colors';
@@ -87,6 +88,10 @@ const MyVibe = () => {
   const logout = () => {
     localStorage.clear();
     navigate('/login');
+  };
+
+  const goHint = () => {
+    navigate('/hint');
   };
 
   const getFollowList = () => {
@@ -335,7 +340,16 @@ const MyVibe = () => {
           <div style={{ marginTop: '0.5rem' }}>
             <Title level={3} style={{ display: 'inline-block' }}>
               {Nick}님의 저장소
-              <EditIcon fontSize='mideum' onClick={edit} />
+              <EditIcon
+                fontSize='mideum'
+                onClick={edit}
+                style={{ marginLeft: '2px' }}
+              />
+              <AnnouncementIcon
+                fontSize='mideum'
+                onClick={goHint}
+                style={{ marginLeft: '5px' }}
+              />
             </Title>
             <hr style={{ marginTop: '-0.5rem' }} />
           </div>
