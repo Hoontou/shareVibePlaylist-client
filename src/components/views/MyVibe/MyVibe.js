@@ -156,7 +156,7 @@ const MyVibe = () => {
   }, []);
 
   const renderCards = plis.map((pli, index) => {
-    return (
+    return pli.thum[1] == undefined ? (
       <Col lg={6} md={8} xs={12} key={index}>
         <div style={{ position: 'relative' }}>
           <a href={`/plis/${pli._id}`}>
@@ -170,7 +170,76 @@ const MyVibe = () => {
         <div style={{ paddingTop: '0.3rem', paddingBottom: '1rem' }}>
           <Meta title={pli.title} />
           <span>
-            {pli.subTitle}, 좋아요:{pli.likes}{' '}
+            {pli.subTitle}, 좋아요:{pli.likes}
+          </span>
+        </div>
+      </Col>
+    ) : (
+      <Col lg={6} md={8} xs={12} key={index}>
+        <div style={{ position: 'relative', display: 'block' }}>
+          <a href={`/plis/${pli._id}`}>
+            <span
+              style={{
+                display: 'inline-block',
+                width: '50%',
+                height: '50%',
+                verticalAlign: 'top',
+              }}
+            >
+              <img
+                style={{ width: '100%' }}
+                alt='thumbnail'
+                src={`${pli.thum[0]}`}
+              />
+            </span>
+            <span
+              style={{
+                display: 'inline-block',
+                width: '50%',
+                height: '50%',
+                verticalAlign: 'top',
+              }}
+            >
+              <img
+                style={{ width: '100%' }}
+                alt='thumbnail'
+                src={`${pli.thum[1]}`}
+              />
+            </span>
+            <span
+              style={{
+                display: 'inline-block',
+                width: '50%',
+                height: '50%',
+                verticalAlign: 'top',
+              }}
+            >
+              <img
+                style={{ width: '100%' }}
+                alt='thumbnail'
+                src={`${pli.thum[2]}`}
+              />
+            </span>
+            <span
+              style={{
+                display: 'inline-block',
+                width: '50%',
+                height: '50%',
+                verticalAlign: 'top',
+              }}
+            >
+              <img
+                style={{ width: '100%' }}
+                alt='thumbnail'
+                src={`${pli.thum[3]}`}
+              />
+            </span>
+          </a>
+        </div>
+        <div style={{ paddingTop: '0.3rem', paddingBottom: '1rem' }}>
+          <Meta title={pli.title} />
+          <span>
+            {pli.subTitle}, 좋아요:{pli.likes}
           </span>
         </div>
       </Col>
