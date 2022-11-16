@@ -129,7 +129,7 @@ const LandingPage = () => {
   //유저가 만든 플리는 thum 배열에 이미지가 네개인데, 만약 플리.thum이 한개가 아니라면 div안에
   //이미지 네개를 넣어주도록 나중에 수정할 예정.
   const renderCards = plis.map((pli, index) => {
-    return (
+    return pli.thum[1] == undefined ? (
       <Col lg={6} md={8} xs={12} key={index}>
         <div style={{ position: 'relative' }}>
           <a href={`/plis/${pli._id}`}>
@@ -138,6 +138,75 @@ const LandingPage = () => {
               alt='thumbnail'
               src={`${pli.thum}`}
             />
+          </a>
+        </div>
+        <div style={{ paddingTop: '0.3rem', paddingBottom: '1rem' }}>
+          <Meta title={pli.title} />
+          <span>
+            {pli.subTitle}, 좋아요:{pli.likes}
+          </span>
+        </div>
+      </Col>
+    ) : (
+      <Col lg={6} md={8} xs={12} key={index}>
+        <div style={{ position: 'relative', display: 'block' }}>
+          <a href={`/plis/${pli._id}`}>
+            <span
+              style={{
+                display: 'inline-block',
+                width: '50%',
+                height: '50%',
+                verticalAlign: 'top',
+              }}
+            >
+              <img
+                style={{ width: '100%' }}
+                alt='thumbnail'
+                src={`${pli.thum[0]}`}
+              />
+            </span>
+            <span
+              style={{
+                display: 'inline-block',
+                width: '50%',
+                height: '50%',
+                verticalAlign: 'top',
+              }}
+            >
+              <img
+                style={{ width: '100%' }}
+                alt='thumbnail'
+                src={`${pli.thum[1]}`}
+              />
+            </span>
+            <span
+              style={{
+                display: 'inline-block',
+                width: '50%',
+                height: '50%',
+                verticalAlign: 'top',
+              }}
+            >
+              <img
+                style={{ width: '100%' }}
+                alt='thumbnail'
+                src={`${pli.thum[2]}`}
+              />
+            </span>
+            <span
+              style={{
+                display: 'inline-block',
+                width: '50%',
+                height: '50%',
+                verticalAlign: 'top',
+              }}
+            >
+              <img
+                style={{ width: '100%' }}
+                alt='thumbnail'
+                src={`${pli.thum[3]}`}
+              />
+            </span>
           </a>
         </div>
         <div style={{ paddingTop: '0.3rem', paddingBottom: '1rem' }}>
