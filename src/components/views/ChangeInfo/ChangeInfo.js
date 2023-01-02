@@ -30,7 +30,7 @@ const ChangeInfo = () => {
   const handleClose = () => setOpen(false);
   const [spin, setSpin] = useState(false);
   const [msg, setMsg] = useState(
-    '다른 사용자에게 보여지는 내 정보를 마음대로 바꿀 수 있어요. 프로필 사진은 네이버에서 변경 후 다시 로그인 하면 변경돼요.'
+    '###지금은 사용 불가능###     다른 사용자에게 보여지는 내 정보를 마음대로 바꿀 수 있어요. 프로필 사진은 네이버에서 변경 후 다시 로그인 하면 변경돼요.'
   );
   const style = {
     position: 'absolute',
@@ -198,7 +198,7 @@ const ChangeInfo = () => {
           paddingBottom: '5rem',
         }}
       >
-        <Button variant='outlined' size='small' onClick={onClick}>
+        <Button variant='outlined' size='small'>
           Change
         </Button>
         <Button
