@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { naverLogin } from './naverLogin';
 import './LoginPage.css';
 import vibeImg from '../../../img/002.jpg';
-import axios from 'axios';
+import { Button, ButtonGroup } from '@mui/material';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { Typography } from 'antd';
@@ -14,6 +14,15 @@ const LoginPage = () => {
   const [open, setOpen] = useState(false);
   const [msg, setMsg] = useState('');
 
+  const guestId = {
+    birthyear: '2021',
+    gender: 'M',
+    id: 'cheeze',
+    nickname: '크림',
+    profile_image:
+      'https://phinf.pstatic.net/contact/20221018_263/1666088854001J6aBh_JPEG/image.jpg',
+    comment: '시간아 멈춰',
+  };
   const style = {
     position: 'absolute',
     top: '50%',
@@ -26,25 +35,9 @@ const LoginPage = () => {
     p: 4,
   };
 
-  const postUserData = (data) => {
-    axios.post('/api/users/register', { data }).then((res) => {
-      if (res.data.success == 1) {
-        localStorage.setItem('userData', JSON.stringify(res.data.userData));
-        localStorage.removeItem('com.naver.nid.oauth.state_token');
-        localStorage.removeItem('com.naver.nid.access_token');
-        navigate('/changeinfo');
-      } else if (res.data.success == 2) {
-        localStorage.setItem('userData', JSON.stringify(res.data.userData));
-        localStorage.removeItem('com.naver.nid.oauth.state_token');
-        localStorage.removeItem('com.naver.nid.access_token');
-        navigate('/');
-      } else {
-        setMsg(
-          '서버에 문제가 있어 로그인에 실패했어요. 나중에 다시 들러주세요 ㅜㅜ'
-        );
-        handleOpen();
-      }
-    });
+  const loginAsGuest = () => {
+    localStorage.setItem('userData', JSON.stringify(guestId));
+    navigate('/');
   };
 
   useEffect(() => {
@@ -53,20 +46,15 @@ const LoginPage = () => {
       navigate('/');
     } else {
       naverLogin.init();
-      naverLogin.getLoginStatus(function (status) {
-        if (status) {
-          const userData = {
-            id: naverLogin.user.id,
-            nickname: naverLogin.user.nickname,
-            birthyear: naverLogin.user.birthyear,
-            profile_image: naverLogin.user.profile_image,
-            gender: naverLogin.user.gender,
-          };
-          postUserData(userData);
-        }
-      });
+      naverLogin.getLoginStatus(function (status) {});
     }
   });
+  useEffect(() => {
+    setMsg(
+      '저작권 이유로 네이버 로그인이 거부됐어요.. 지금은 게스트로 둘러보기만 가능해요.'
+    );
+    handleOpen();
+  }, []);
 
   return (
     <div className='container text-center'>
@@ -95,6 +83,15 @@ const LoginPage = () => {
         className='login-area stagger-3'
         style={{ position: 'relative', top: '150px' }}
       >
+        <ButtonGroup variant='outlined' aria-label='outlined button group'>
+          <Button
+            color={'primary'}
+            onClick={loginAsGuest}
+            style={{ fontSize: '1.3rem', marginBottom: '0.5rem' }}
+          >
+            게스트로 둘러보기
+          </Button>
+        </ButtonGroup>
         <div id='button_area'>
           <div id='naverIdLogin'></div>
         </div>
